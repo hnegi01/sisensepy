@@ -1,4 +1,4 @@
-domain: "10.176.10.190"  # Can be an IP address like "192.168.1.1"
+domain: ""  # Can be an IP address like "192.168.1.1"
 is_ssl: true  # Whether to use SSL or not
-source_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjIyOGRiOTFiYTEwYWQwMDJkOTZjNTE4IiwiYXBpU2VjcmV0IjoiNDZjZDk3YjEtOTRmMi0yNjE4LTI5MGQtMWU1Y2M3NzQxY2QwIiwiYWxsb3dlZFRlbmFudHMiOlsiNjIwMTIzYTFiYzBhMWUwMDFhNTlkMjQ5Il0sInRlbmFudElkIjoiNjIwMTIzYTFiYzBhMWUwMDFhNTlkMjQ5IiwiZXhwIjoxNzI4OTI4NzI3fQ.YvQ7f5eJ9DpfljgCXVwLltIfrS3WeFhfB99rAXjJoGE"
-datamodels: ["churn_prediction"]  # List of datamodels to be used
+source_token: ""
+datamodels: ["ABC"]  # List of datamodels to be used

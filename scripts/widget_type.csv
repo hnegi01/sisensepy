@@ -1,0 +1,540 @@
+dashboard_name,widget_type
+1 - ESG Dashboard,chart/column
+1 - ESG Dashboard,chart/line
+1 - ESG Dashboard,chart/bar
+1 - ESG Dashboard,chart/column
+1 - ESG Dashboard,chart/column
+1 - ESG Dashboard,BloX
+1 - ESG Dashboard,BloX
+1 - ESG Dashboard,chart/column
+1 - ESG Dashboard,chart/column
+_accrd_test,indicator
+_drill_beqom,pivot2
+_drill_CCT_json,BloX
+_drill_CCT_json,BloX
+_drill_dash,pivot2
+_drill_Sample_Ecommerce,indicator
+_drill_Sample_Ecommerce,indicator
+_drill_Sample_Ecommerce,chart/scatter
+_drill_Sample_Ecommerce,chart/line
+_drill_test_plugin (1),chart/pie
+_try_another,pivot2
+_try_test,pivot2
+Accounts_Receivable_closed_ar_auto_sklearn,BloX
+Accounts_Receivable_closed_ar_sagemaker,BloX
+airline_sisense_custom,chart/line
+airline_sisense_custom,pivot2
+airline_sisense_custom,pivot2
+airline_sisense_custom (1),chart/line
+airline_sisense_custom (1),pivot2
+airline_sisense_custom (1),pivot2
+akitabox_metadata,pivot2
+Amex,chart/line
+Amex,BloX
+Amex,chart/line
+Amex,pivot2
+APIs,pivot2
+Auto_ML-Online-Prediction,pivot2
+Auto_ML-Online-Prediction,pivot2
+Auto_ML-Online-Prediction(blox),BloX
+Autobot,pivot2
+Autobot,BloX
+Autobot,indicator
+Autobot,pivot2
+Autobot,indicator
+Autobot_original,pivot2
+Autobot_original,BloX
+Autobot_original,indicator
+Autobot_original,pivot2
+Autobot_original,pivot2
+Autobot_original,indicator
+Autobot_original,indicator
+bank_churn_bank_churn_train_auto_sklearn,BloX
+bank_churn_bank_churn_train_auto_sklearn,tablewidget
+bank_churn_bank_churn_train_sagemaker,BloX
+Beqom,chart/bar
+Beqom,chart/bar
+Beqom,chart/line
+Beqom,chart/bar
+Beqom,pivot2
+bigquery,indicator
+bigquery,indicator
+bigquery,chart/boxplot
+Blox - Measure Switcher v2.1 - Supports Format,chart/column
+Blox - Measure Switcher v2.1 - Supports Format,BloX
+Blox - Measure Switcher v2.1 - Supports Format,chart/bar
+Blox - Measure Switcher v2.1 - Supports Format,chart/line
+Blox - Measure Switcher v2.1 - Supports Format,indicator
+Blox - Measure Switcher v2.1 - Supports Format,richtexteditor
+Blox - Measure Switcher v2.1 - Supports Format,pivot2
+Blox - Measure Switcher v2.1 - Supports Format,richtexteditor
+Blox AI,richtexteditor
+Blox AI,BloX
+Blox Examples,BloX
+Blox Examples,pivot2
+Blox Examples,pivot2
+Blox Examples,pivot2
+Blox Examples,BloX
+Blox Examples,BloX
+Blox Examples,BloX
+Blox Examples,BloX
+Blox Examples,BloX
+Blox Examples,BloX
+Blox Examples,BloX
+Blox Examples,BloX
+Blox Examples,BloX
+Blox Examples (1),BloX
+Blox Examples (1),pivot2
+Blox Examples (1),BloX
+Blox Examples (1),BloX
+Blox Month L12M Quarter Year Filter Buttons,BloX
+Blox1,BloX
+Blox1,BloX
+Blox1,BloX
+Blox1,wiserFilterWidget
+Blox1,wiserFilterWidget
+Blox1,wiserFilterWidget
+Blox1,BloX
+Blox1,pivot2
+Blox1,BloX
+Blox1,BloX
+blox_landing_page,BloX
+blox_train_model,pivot2
+CCT_json,pivot2
+central_square_sdiff,pivot2
+CentralReach,pivot2
+CentralReach,chart/line
+CentralReach,indicator
+CentralReach,indicator
+CentralReach,pivot2
+centralsquare_search,indicator
+churn_prediction_churn_auto_sklearn,BloX
+churn_prediction_churn_sagemaker,BloX
+Community,chart/line
+CON,pivot2
+Demo,tablewidget
+Demo- Notebooks,chart/column
+DS_CHECK,pivot2
+Dynamic_EC,pivot2
+Dynamic_EC,indicator
+Dynamic_EC,pivot2
+expand_pivot,pivot2
+Export to PDF text widget,richtexteditor
+generative_ai,BloX
+Governance Dashboard,pivot2
+Governance Dashboard,indicator
+Governance Dashboard,indicator
+Governance Dashboard,pivot2
+Governance Dashboard,pivot2
+Governance Dashboard,chart/bar
+Governance Dashboard,pivot2
+Governance Dashboard,BloX
+Governance Dashboard,indicator
+Governance Users Info,chart/bar
+Governance Users Info,pivot2
+Governance Users Info,chart/pie
+Governance Users Info,indicator
+Governance Users Info,pivot2
+Governance Users Info,chart/pie
+Governance Users Info,BloX
+Health Assessment,indicator
+Health Assessment,pivot2
+Health Assessment,indicator
+Health Assessment,pivot2
+Health Assessment,pivot2
+Health Assessment,indicator
+Health Assessment,indicator
+Health Assessment,indicator
+Health Assessment,indicator
+Health Assessment,indicator
+Health Assessment,indicator
+Health Assessment,chart/column
+Health Assessment,pivot2
+Health Assessment,pivot2
+Health Assessment,indicator
+Health Assessment,indicator
+Health Assessment,indicator
+Health Assessment,indicator
+Health Assessment,pivot2
+Health Assessment,richtexteditor
+Health Assessment,richtexteditor
+Health Assessment,pivot2
+Health Assessment,pivot2
+himanshu_test,indicator
+himanshu_test,chart/pie
+housing_dataset_housing_auto_sklearn,BloX
+housing_dataset_housing_sagemaker,BloX
+image_url,BloX
+include_all_dim,pivot2
+Industrial_Scientific,BloX
+Industrial_Scientific,indicator
+INDUSTRY - SBS View,chart/pie
+INDUSTRY - SBS View,chart/line
+INDUSTRY - SBS View,richtexteditor
+INDUSTRY - SBS View,chart/line
+INDUSTRY - SBS View,chart/pie
+INDUSTRY - SBS View,richtexteditor
+INDUSTRY - SBS View,richtexteditor
+INDUSTRY - SBS View,chart/line
+INDUSTRY - SBS View,chart/pie
+INDUSTRY - SBS View,BloX
+INDUSTRY - SBS View,indicator
+INDUSTRY - SBS View,indicator
+INDUSTRY - SBS View,pivot2
+INDUSTRY - SBS View,pivot2
+INDUSTRY - SBS View,indicator
+INDUSTRY - SBS View,pivot2
+INDUSTRY - SBS View,pivot2
+INDUSTRY - SBS View,chart/line
+INDUSTRY - SBS View,chart/column
+INDUSTRY - SBS View,indicator
+INDUSTRY - SBS View,chart/column
+INDUSTRY - SBS View,chart/pie
+IntApp,richtexteditor
+IPC Body CMM,chart/line
+IPC Body CMM,histogramwidget
+IPC Body CMM,histogramwidget
+IPC Body CMM,BloX
+IPC Body CMM,chart/line
+IPC Body CMM,chart/line
+IPC Body CMM,histogramwidget
+IPC Body CMM,BloX
+IPC Body CMM,BloX
+IPC Body CMM (1),chart/line
+IPC Body CMM (1),histogramwidget
+IPC Body CMM (1),histogramwidget
+IPC Body CMM (1),BloX
+IPC Body CMM (1),chart/line
+IPC Body CMM (1),chart/line
+IPC Body CMM (1),histogramwidget
+IPC Body CMM (1),BloX
+IPC Body CMM (1),BloX
+IPC Body CMM (2),chart/line
+IPC Body CMM (2),histogramwidget
+IPC Body CMM (2),histogramwidget
+IPC Body CMM (2),BloX
+IPC Body CMM (2),chart/line
+IPC Body CMM (2),chart/line
+IPC Body CMM (2),histogramwidget
+IPC Body CMM (2),BloX
+IPC Body CMM (2),BloX
+iris_dataset_Iris_auto_sklearn,BloX
+JAQL,pivot2
+JAQL_Test,pivot2
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/pie
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,map/scatter
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,BloX
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,indicator
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,tablewidget
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/pie
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,richtexteditor
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,tablewidget
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,indicator
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,sankeyWidget
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/pie
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,indicator
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,map/scatter
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/pie
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,WidgetsTabber
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,sankeyWidget
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,indicator
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,map/scatter
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,tablewidget
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/pie
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,sankeyWidget
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,tablewidget
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/line
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/pie
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,indicator
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,pivot2
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/pie
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/pie
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/bar
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,indicator
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,indicator
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,chart/line
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,tablewidget
+look_and_feel,chart/pie
+look_and_feel2,chart/pie
+Main_Dash,chart/pie
+Main_Dash,chart/bar
+Main_Dash,pivot2
+Mytonomy_Blox,BloX
+Mytonomy_Blox,BloX
+Mytonomy_Blox,BloX
+Mytonomy_Blox,pivot2
+mytonomy_widget,chart/column
+mytonomy_widget,chart/column
+nasdaq_switch_measure,chart/line
+nasdaq_switch_measure,BloX
+Nouria_AI_Demo,chart/line
+Nouria_AI_Demo,indicator
+Nouria_AI_Demo,chart/line
+Nouria_AI_Demo,chart/line
+pivot_widget_api,pivot2
+pivot_widget_api,indicator
+pivot_widget_script,pivot2
+pivot_widget_script,pivot
+pulse_tangoe,indicator
+pulse_tangoe,indicator
+pulse_tangoe,chart/line
+pulse_tangoe,indicator
+query_path,pivot2
+samp_lead_gen_2,pivot2
+samp_lead_gen_2,indicator
+samp_lead_gen_2,chart/line
+samp_lead_gen_2,map/area
+samp_lead_gen_2,pivot2
+Sample - Ecommerce,indicator
+Sample - Ecommerce,indicator
+Sample - Ecommerce,chart/pie
+Sample - Ecommerce,indicator
+Sample - Ecommerce,chart/pie
+Sample - Ecommerce,indicator
+Sample - Ecommerce,chart/scatter
+Sample - Ecommerce,chart/line
+Sample - Ecommerce,chart/bar
+Sample - Ecommerce,chart/bar
+Sample - Healthcare,indicator
+Sample - Healthcare,chart/polar
+Sample - Healthcare,indicator
+Sample - Healthcare,indicator
+Sample - Healthcare,indicator
+Sample - Healthcare,chart/line
+Sample - Healthcare,pivot
+Sample - Lead Generation,chart/pie
+Sample - Lead Generation,map/scatter
+Sample - Lead Generation,indicator
+Sample - Lead Generation,indicator
+Sample - Lead Generation,indicator
+Sample - Lead Generation,indicator
+Sample - Lead Generation,chart/line
+Sample - Retail,chart/line
+Sample - Retail,indicator
+Sample - Retail,chart/line
+Sample - Retail,indicator
+Sample - Retail,chart/column
+Sample - Retail,indicator
+Sample - Retail,pivot2
+Sample - Retail,indicator
+Sample ECommerce,pivot2
+Sample Healthcare,pivot2
+Sample Lead Generation,indicator
+Sample Retail,indicator
+Sample Retail (1),pivot2
+SCE Commerce - Detailed Company View v1.4.1,chart/pie
+SCE Commerce - Detailed Company View v1.4.1,indicator
+SCE Commerce - Detailed Company View v1.4.1,BloX
+SCE Commerce - Detailed Company View v1.4.1,map/scatter
+SCE Commerce - Detailed Company View v1.4.1,indicator
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,tablewidget
+SCE Commerce - Detailed Company View v1.4.1,tablewidget
+SCE Commerce - Detailed Company View v1.4.1,chart/pie
+SCE Commerce - Detailed Company View v1.4.1,richtexteditor
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,indicator
+SCE Commerce - Detailed Company View v1.4.1,indicator
+SCE Commerce - Detailed Company View v1.4.1,tablewidget
+SCE Commerce - Detailed Company View v1.4.1,sankeyWidget
+SCE Commerce - Detailed Company View v1.4.1,chart/pie
+SCE Commerce - Detailed Company View v1.4.1,map/scatter
+SCE Commerce - Detailed Company View v1.4.1,WidgetsTabber
+SCE Commerce - Detailed Company View v1.4.1,sankeyWidget
+SCE Commerce - Detailed Company View v1.4.1,chart/pie
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,sankeyWidget
+SCE Commerce - Detailed Company View v1.4.1,map/scatter
+SCE Commerce - Detailed Company View v1.4.1,chart/pie
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,tablewidget
+SCE Commerce - Detailed Company View v1.4.1,chart/line
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,chart/pie
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,chart/line
+SCE Commerce - Detailed Company View v1.4.1,indicator
+SCE Commerce - Detailed Company View v1.4.1,pivot2
+SCE Commerce - Detailed Company View v1.4.1,indicator
+SCE Commerce - Detailed Company View v1.4.1,chart/pie
+SCE Commerce - Detailed Company View v1.4.1,chart/pie
+SCE Commerce - Detailed Company View v1.4.1,chart/bar
+SCE Commerce - Detailed Company View v1.4.1,tablewidget
+SCE Commerce - Detailed Company View v1.4.1,indicator
+simply_ask,pivot2
+simply_ask,pivot2
+simply_ask,pivot2
+slowest_performing_assets,pivot2
+solution_center_blox,BloX
+Subaru,chart/line
+supply _wisdom,pivot2
+supply _wisdom,chart/bar
+TE_A_Test,pivot2
+Test FOO-13110,richtexteditor
+test1_2,pivot2
+Test_ec_to_live,indicator
+test_flow,pivot2
+test_flow (1),pivot2
+test_plugin,chart/pie
+Time_Series,chart/line
+Time_Series,chart/line
+total_expert_null,pivot2
+trtr,indicator
+trtr,pivot2
+unused,chart/column
+unused (1),chart/bar
+Usage - Builds - Failures,indicator
+Usage - Builds - Failures,indicator
+Usage - Builds - Failures,indicator
+Usage - Builds - Failures,chart/column
+Usage - Builds - Failures,richtexteditor
+Usage - Builds - Failures,chart/bar
+Usage - Builds - Failures,pivot2
+Usage - Builds - Failures,richtexteditor
+Usage - Builds - Failures,tablewidget
+Usage - Builds - Failures,chart/bar
+Usage - Builds - Failures,pivot2
+Usage - Builds - Overview,indicator
+Usage - Builds - Overview,indicator
+Usage - Builds - Overview,richtexteditor
+Usage - Builds - Overview,indicator
+Usage - Builds - Overview,richtexteditor
+Usage - Builds - Overview,pivot2
+Usage - Builds - Overview,chart/column
+Usage - Builds - Overview,chart/column
+Usage - Builds - Overview,chart/line
+Usage - Builds - Overview,richtexteditor
+Usage - Builds - Overview,chart/line
+Usage - Builds - Overview,indicator
+Usage - Builds - Overview,chart/column
+Usage - Builds - Overview,richtexteditor
+Usage - Builds - Overview,richtexteditor
+Usage - Builds - Overview,chart/scatter
+Usage - Builds - Overview,chart/bar
+Usage - Builds - Overview,pivot2
+Usage - Dashboards,indicator
+Usage - Dashboards,indicator
+Usage - Dashboards,indicator
+Usage - Dashboards,pivot
+Usage - Dashboards,chart/line
+Usage - Dashboards,indicator
+Usage - Dashboards,pivot
+Usage - Dashboards,chart/line
+Usage - Dashboards,indicator
+Usage - Dashboards,chart/line
+Usage - Domains,indicator
+Usage - Domains,indicator
+Usage - Domains,indicator
+Usage - Domains,indicator
+Usage - Domains,indicator
+Usage - Domains,chart/line
+Usage - Domains,indicator
+Usage - Domains,pivot
+Usage - Domains,pivot
+Usage - Domains,chart/line
+Usage - Domains,pivot
+Usage - Domains,chart/line
+Usage - Domains,pivot
+Usage - Domains,pivot
+Usage - General,indicator
+Usage - General,indicator
+Usage - General,indicator
+Usage - General,chart/line
+Usage - General,chart/line
+Usage - General,pivot
+Usage - General,pivot
+Usage - General,chart/line
+Usage - General,indicator
+Usage - Groups,pivot
+Usage - Groups,indicator
+Usage - Groups,indicator
+Usage - Groups,indicator
+Usage - Groups,indicator
+Usage - Groups,indicator
+Usage - Groups,chart/line
+Usage - Groups,chart/line
+Usage - Groups,chart/line
+Usage - Groups,pivot
+Usage - Groups,indicator
+Usage - Query,indicator
+Usage - Query,indicator
+Usage - Query,indicator
+Usage - Query,chart/line
+Usage - Query,chart/line
+Usage - Query,chart/line
+Usage - Query,pivot2
+Usage - Query,indicator
+Usage - Query,chart/line
+Usage - Query,tablewidget
+Usage - Query,pivot2
+Usage - Query,indicator
+Usage - Query,indicator
+Usage - Query,treemap
+Usage - Query,pivot2
+Usage - Query,chart/line
+Usage - Query,richtexteditor
+Usage - Query,chart/line
+Usage - Query,chart/line
+Usage - Query,chart/line
+Usage - Query,richtexteditor
+Usage - Query,chart/pie
+Usage - Query,indicator
+Usage - Query,indicator
+Usage - Query,indicator
+Usage - Query,chart/column
+Usage - Query,richtexteditor
+Usage - Query,indicator
+Usage - Query,tablewidget
+Usage - Query,chart/pie
+Usage - Query,richtexteditor
+Usage - Query,indicator
+Usage - Query,chart/line
+Usage - Query,indicator
+Usage - Query,chart/line
+Usage - Query,chart/pie
+Usage - Users,indicator
+Usage - Users,pivot
+Usage - Users,indicator
+Usage - Users,indicator
+Usage - Users,indicator
+Usage - Users,chart/line
+Usage - Users,pivot
+Usage - Users,chart/line
+Usage - Users,chart/line
+Usage - Users,pivot
+Usage - Users,pivot
+Used Table and Column,pivot2
+Used Table and Column,BloX
+Used Table and Column,pivot2
+Verge_Demo,pivot2
+Verge_Demo,chart/line
+Verge_Demo,chart/bar
+Verge_Demo,chart/pie
+Verge_Demo,chart/pie
+Verge_Demo (Live),pivot2
+Verge_Demo (Live),chart/line
+Verge_DS,pivot2
+Verizon_Custom_Code,pivot2
+Wabtech,tablewidget
+Wabtech,chart/column
+wellcheck,chart/bar
+wellcheck,indicator
+wellcheck,indicator
+wellcheck,chart/column
+wellcheck,pivot2
+widget,pivot2
+zywave,BloX
+zywave,pivot2
+zywave,BloX

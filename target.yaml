@@ -1,0 +1,9 @@
+domain: "10.176.10.211"  # The domain or IP address of the target environment
+is_ssl: false  # Whether to use HTTPS (true) or HTTP (false)
+source_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjcxOGZjY2ExOTY5YzQwMDJlOTMwZWI5IiwiYXBpU2VjcmV0IjoiNjgzZDRjZTItZGIyOS02MzgxLWU4ZDctYzJiYmJhY2NjMTIyIiwiYWxsb3dlZFRlbmFudHMiOlsiNjZkODZhOGJhZmI5MTAwMDFjODkzNGMzIl0sInRlbmFudElkIjoiNjZkODZhOGJhZmI5MTAwMDFjODkzNGMzIiwiZXhwIjoxNzMwMjk1NjQ2fQ.ELETMfEVLjYXnxkNXWB3MURPBYjEyStFRGyMvluSQs4"
+
+## user: target@sisense.com
+
+# domain: "solutioncenter.sisense.com"  # The domain or IP address of the target environment
+# is_ssl: true  # Whether to use HTTPS (true) or HTTP (false)
+# source_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjFiYjU0YjRmYjI4ZGYwMDJkNDBjYzQ4IiwiYXBpU2VjcmV0IjoiNmYyNDIyYjItYzU0ZS02ODQ1LWU1MzAtY2MzNDJlZWY2NTNhIiwiYWxsb3dlZFRlbmFudHMiOlsiNjEzYjAyMDBiYjQ0ZTcwMDFiNGZjOTE0Il0sInRlbmFudElkIjoiNjEzYjAyMDBiYjQ0ZTcwMDFiNGZjOTE0In0.zBjXrPOsQ1XiAoxVPXA1GzVjt-gJUsOatnVn6aYRIFg"

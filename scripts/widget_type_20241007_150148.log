@@ -1,0 +1,259 @@
+2024-10-07 15:01:48,078 - INFO - Starting dashboard processing script.
+2024-10-07 15:01:49,602 - INFO - Successfully retrieved 124 dashboards.
+2024-10-07 15:01:49,604 - INFO - Processing dashboard: 1 - ESG Dashboard (Total Widgets: 9)
+2024-10-07 15:01:49,988 - INFO - Processed 9 widgets for dashboard: 1 - ESG Dashboard
+2024-10-07 15:01:49,988 - INFO - Processing dashboard: _accrd_test (Total Widgets: 1)
+2024-10-07 15:01:50,329 - INFO - Processed 1 widgets for dashboard: _accrd_test
+2024-10-07 15:01:50,329 - INFO - Processing dashboard: _drill_beqom (Total Widgets: 1)
+2024-10-07 15:01:50,682 - INFO - Processed 1 widgets for dashboard: _drill_beqom
+2024-10-07 15:01:50,683 - INFO - Processing dashboard: _drill_CCT_json (Total Widgets: 2)
+2024-10-07 15:01:51,019 - INFO - Processed 2 widgets for dashboard: _drill_CCT_json
+2024-10-07 15:01:51,019 - INFO - Processing dashboard: _drill_dash (Total Widgets: 1)
+2024-10-07 15:01:51,380 - INFO - Processed 1 widgets for dashboard: _drill_dash
+2024-10-07 15:01:51,381 - INFO - Processing dashboard: _drill_Sample_Ecommerce (Total Widgets: 4)
+2024-10-07 15:01:51,745 - INFO - Processed 4 widgets for dashboard: _drill_Sample_Ecommerce
+2024-10-07 15:01:51,745 - INFO - Processing dashboard: _drill_test_plugin (1) (Total Widgets: 1)
+2024-10-07 15:01:52,127 - INFO - Processed 1 widgets for dashboard: _drill_test_plugin (1)
+2024-10-07 15:01:52,128 - INFO - Processing dashboard: _try_another (Total Widgets: 1)
+2024-10-07 15:01:52,478 - INFO - Processed 1 widgets for dashboard: _try_another
+2024-10-07 15:01:52,479 - INFO - Processing dashboard: _try_test (Total Widgets: 1)
+2024-10-07 15:01:52,817 - INFO - Processed 1 widgets for dashboard: _try_test
+2024-10-07 15:01:52,817 - INFO - Processing dashboard: Accounts_Receivable_closed_ar_auto_sklearn (Total Widgets: 1)
+2024-10-07 15:01:53,173 - INFO - Processed 1 widgets for dashboard: Accounts_Receivable_closed_ar_auto_sklearn
+2024-10-07 15:01:53,174 - INFO - Processing dashboard: Accounts_Receivable_closed_ar_sagemaker (Total Widgets: 1)
+2024-10-07 15:01:53,519 - INFO - Processed 1 widgets for dashboard: Accounts_Receivable_closed_ar_sagemaker
+2024-10-07 15:01:53,519 - INFO - Processing dashboard: airline_sisense_custom (Total Widgets: 3)
+2024-10-07 15:01:53,857 - INFO - Processed 3 widgets for dashboard: airline_sisense_custom
+2024-10-07 15:01:53,858 - INFO - Processing dashboard: airline_sisense_custom (1) (Total Widgets: 3)
+2024-10-07 15:01:54,217 - INFO - Processed 3 widgets for dashboard: airline_sisense_custom (1)
+2024-10-07 15:01:54,217 - INFO - Processing dashboard: akitabox_metadata (Total Widgets: 1)
+2024-10-07 15:01:54,577 - INFO - Processed 1 widgets for dashboard: akitabox_metadata
+2024-10-07 15:01:54,577 - INFO - Processing dashboard: Amex (Total Widgets: 4)
+2024-10-07 15:01:54,929 - INFO - Processed 4 widgets for dashboard: Amex
+2024-10-07 15:01:54,929 - INFO - Processing dashboard: APIs (Total Widgets: 1)
+2024-10-07 15:01:55,281 - INFO - Processed 1 widgets for dashboard: APIs
+2024-10-07 15:01:55,281 - INFO - Processing dashboard: Auto_ML-Online-Prediction (Total Widgets: 2)
+2024-10-07 15:01:55,636 - INFO - Processed 2 widgets for dashboard: Auto_ML-Online-Prediction
+2024-10-07 15:01:55,636 - INFO - Processing dashboard: Auto_ML-Online-Prediction(blox) (Total Widgets: 1)
+2024-10-07 15:01:55,978 - INFO - Processed 1 widgets for dashboard: Auto_ML-Online-Prediction(blox)
+2024-10-07 15:01:55,979 - INFO - Processing dashboard: Autobot (Total Widgets: 5)
+2024-10-07 15:01:56,350 - INFO - Processed 5 widgets for dashboard: Autobot
+2024-10-07 15:01:56,351 - INFO - Processing dashboard: Autobot_original (Total Widgets: 7)
+2024-10-07 15:01:56,717 - INFO - Processed 7 widgets for dashboard: Autobot_original
+2024-10-07 15:01:56,717 - INFO - Processing dashboard: bank_churn_bank_churn_train_auto_sklearn (Total Widgets: 2)
+2024-10-07 15:01:57,089 - INFO - Processed 2 widgets for dashboard: bank_churn_bank_churn_train_auto_sklearn
+2024-10-07 15:01:57,089 - INFO - Processing dashboard: bank_churn_bank_churn_train_sagemaker (Total Widgets: 1)
+2024-10-07 15:01:57,450 - INFO - Processed 1 widgets for dashboard: bank_churn_bank_churn_train_sagemaker
+2024-10-07 15:01:57,450 - INFO - Processing dashboard: Beqom (Total Widgets: 5)
+2024-10-07 15:01:57,804 - INFO - Processed 5 widgets for dashboard: Beqom
+2024-10-07 15:01:57,804 - INFO - Processing dashboard: bigquery (Total Widgets: 3)
+2024-10-07 15:01:58,157 - INFO - Processed 3 widgets for dashboard: bigquery
+2024-10-07 15:01:58,157 - INFO - Processing dashboard: Blox - Measure Switcher v2.1 - Supports Format (Total Widgets: 8)
+2024-10-07 15:01:58,496 - INFO - Processed 8 widgets for dashboard: Blox - Measure Switcher v2.1 - Supports Format
+2024-10-07 15:01:58,497 - INFO - Processing dashboard: Blox AI (Total Widgets: 2)
+2024-10-07 15:01:58,858 - INFO - Processed 2 widgets for dashboard: Blox AI
+2024-10-07 15:01:58,859 - INFO - Processing dashboard: Blox Examples (Total Widgets: 13)
+2024-10-07 15:01:59,223 - INFO - Processed 13 widgets for dashboard: Blox Examples
+2024-10-07 15:01:59,224 - INFO - Processing dashboard: Blox Examples (1) (Total Widgets: 4)
+2024-10-07 15:01:59,569 - INFO - Processed 4 widgets for dashboard: Blox Examples (1)
+2024-10-07 15:01:59,569 - INFO - Processing dashboard: Blox Month L12M Quarter Year Filter Buttons (Total Widgets: 1)
+2024-10-07 15:01:59,918 - INFO - Processed 1 widgets for dashboard: Blox Month L12M Quarter Year Filter Buttons
+2024-10-07 15:01:59,919 - INFO - Processing dashboard: Blox1 (Total Widgets: 10)
+2024-10-07 15:02:00,276 - INFO - Processed 10 widgets for dashboard: Blox1
+2024-10-07 15:02:00,277 - INFO - Processing dashboard: blox_landing_page (Total Widgets: 1)
+2024-10-07 15:02:00,631 - INFO - Processed 1 widgets for dashboard: blox_landing_page
+2024-10-07 15:02:00,631 - INFO - Processing dashboard: blox_train_model (Total Widgets: 1)
+2024-10-07 15:02:00,984 - INFO - Processed 1 widgets for dashboard: blox_train_model
+2024-10-07 15:02:00,984 - INFO - Processing dashboard: CCT_json (Total Widgets: 1)
+2024-10-07 15:02:01,330 - INFO - Processed 1 widgets for dashboard: CCT_json
+2024-10-07 15:02:01,331 - INFO - Processing dashboard: central_square_sdiff (Total Widgets: 1)
+2024-10-07 15:02:01,678 - INFO - Processed 1 widgets for dashboard: central_square_sdiff
+2024-10-07 15:02:01,678 - INFO - Processing dashboard: CentralReach (Total Widgets: 5)
+2024-10-07 15:02:02,275 - INFO - Processed 5 widgets for dashboard: CentralReach
+2024-10-07 15:02:02,275 - INFO - Processing dashboard: centralsquare_search (Total Widgets: 1)
+2024-10-07 15:02:02,624 - INFO - Processed 1 widgets for dashboard: centralsquare_search
+2024-10-07 15:02:02,625 - INFO - Processing dashboard: churn_prediction_churn_auto_sklearn (Total Widgets: 1)
+2024-10-07 15:02:02,997 - INFO - Processed 1 widgets for dashboard: churn_prediction_churn_auto_sklearn
+2024-10-07 15:02:02,997 - INFO - Processing dashboard: churn_prediction_churn_sagemaker (Total Widgets: 1)
+2024-10-07 15:02:03,367 - INFO - Processed 1 widgets for dashboard: churn_prediction_churn_sagemaker
+2024-10-07 15:02:03,367 - INFO - Processing dashboard: Community (Total Widgets: 1)
+2024-10-07 15:02:03,704 - INFO - Processed 1 widgets for dashboard: Community
+2024-10-07 15:02:03,704 - INFO - Processing dashboard: CON (Total Widgets: 1)
+2024-10-07 15:02:04,046 - INFO - Processed 1 widgets for dashboard: CON
+2024-10-07 15:02:04,047 - INFO - Processing dashboard: Demo (Total Widgets: 1)
+2024-10-07 15:02:04,487 - INFO - Processed 1 widgets for dashboard: Demo
+2024-10-07 15:02:04,487 - INFO - Processing dashboard: Demo- Notebooks (Total Widgets: 1)
+2024-10-07 15:02:04,825 - INFO - Processed 1 widgets for dashboard: Demo- Notebooks
+2024-10-07 15:02:04,826 - INFO - Processing dashboard: DS_CHECK (Total Widgets: 1)
+2024-10-07 15:02:05,197 - INFO - Processed 1 widgets for dashboard: DS_CHECK
+2024-10-07 15:02:05,197 - INFO - Processing dashboard: Dynamic_EC (Total Widgets: 3)
+2024-10-07 15:02:05,523 - INFO - Processed 3 widgets for dashboard: Dynamic_EC
+2024-10-07 15:02:05,523 - INFO - Processing dashboard: expand_pivot (Total Widgets: 1)
+2024-10-07 15:02:05,877 - INFO - Processed 1 widgets for dashboard: expand_pivot
+2024-10-07 15:02:05,878 - INFO - Processing dashboard: Export to PDF text widget (Total Widgets: 1)
+2024-10-07 15:02:06,229 - INFO - Processed 1 widgets for dashboard: Export to PDF text widget
+2024-10-07 15:02:06,230 - INFO - Processing dashboard: generative_ai (Total Widgets: 1)
+2024-10-07 15:02:06,580 - INFO - Processed 1 widgets for dashboard: generative_ai
+2024-10-07 15:02:06,581 - INFO - Processing dashboard: Governance Dashboard (Total Widgets: 9)
+2024-10-07 15:02:06,932 - INFO - Processed 9 widgets for dashboard: Governance Dashboard
+2024-10-07 15:02:06,933 - INFO - Processing dashboard: Governance Users Info (Total Widgets: 7)
+2024-10-07 15:02:07,282 - INFO - Processed 7 widgets for dashboard: Governance Users Info
+2024-10-07 15:02:07,282 - INFO - Processing dashboard: Health Assessment (Total Widgets: 23)
+2024-10-07 15:02:07,662 - INFO - Processed 23 widgets for dashboard: Health Assessment
+2024-10-07 15:02:07,663 - INFO - Processing dashboard: himanshu_test (Total Widgets: 2)
+2024-10-07 15:02:08,014 - INFO - Processed 2 widgets for dashboard: himanshu_test
+2024-10-07 15:02:08,014 - INFO - Processing dashboard: housing_dataset_housing_auto_sklearn (Total Widgets: 1)
+2024-10-07 15:02:08,359 - INFO - Processed 1 widgets for dashboard: housing_dataset_housing_auto_sklearn
+2024-10-07 15:02:08,359 - INFO - Processing dashboard: housing_dataset_housing_sagemaker (Total Widgets: 1)
+2024-10-07 15:02:08,717 - INFO - Processed 1 widgets for dashboard: housing_dataset_housing_sagemaker
+2024-10-07 15:02:08,717 - INFO - Processing dashboard: Iframe (Total Widgets: 0)
+2024-10-07 15:02:09,087 - INFO - Processed 0 widgets for dashboard: Iframe
+2024-10-07 15:02:09,088 - INFO - Processing dashboard: image_url (Total Widgets: 1)
+2024-10-07 15:02:09,424 - INFO - Processed 1 widgets for dashboard: image_url
+2024-10-07 15:02:09,425 - INFO - Processing dashboard: include_all_dim (Total Widgets: 1)
+2024-10-07 15:02:09,755 - INFO - Processed 1 widgets for dashboard: include_all_dim
+2024-10-07 15:02:09,755 - INFO - Processing dashboard: Industrial_Scientific (Total Widgets: 2)
+2024-10-07 15:02:10,107 - INFO - Processed 2 widgets for dashboard: Industrial_Scientific
+2024-10-07 15:02:10,108 - INFO - Processing dashboard: INDUSTRY - SBS View (Total Widgets: 22)
+2024-10-07 15:02:10,514 - INFO - Processed 22 widgets for dashboard: INDUSTRY - SBS View
+2024-10-07 15:02:10,515 - INFO - Processing dashboard: IntApp (Total Widgets: 1)
+2024-10-07 15:02:10,861 - INFO - Processed 1 widgets for dashboard: IntApp
+2024-10-07 15:02:10,861 - INFO - Processing dashboard: Intelex (Total Widgets: 0)
+2024-10-07 15:02:11,209 - INFO - Processed 0 widgets for dashboard: Intelex
+2024-10-07 15:02:11,209 - INFO - Processing dashboard: IPC Body CMM (Total Widgets: 9)
+2024-10-07 15:02:11,565 - INFO - Processed 9 widgets for dashboard: IPC Body CMM
+2024-10-07 15:02:11,565 - INFO - Processing dashboard: IPC Body CMM (1) (Total Widgets: 9)
+2024-10-07 15:02:11,994 - INFO - Processed 9 widgets for dashboard: IPC Body CMM (1)
+2024-10-07 15:02:11,994 - INFO - Processing dashboard: IPC Body CMM (2) (Total Widgets: 9)
+2024-10-07 15:02:12,340 - INFO - Processed 9 widgets for dashboard: IPC Body CMM (2)
+2024-10-07 15:02:12,340 - INFO - Processing dashboard: iris_dataset_Iris_auto_sklearn (Total Widgets: 1)
+2024-10-07 15:02:12,711 - INFO - Processed 1 widgets for dashboard: iris_dataset_Iris_auto_sklearn
+2024-10-07 15:02:12,711 - INFO - Processing dashboard: JAQL (Total Widgets: 1)
+2024-10-07 15:02:13,065 - INFO - Processed 1 widgets for dashboard: JAQL
+2024-10-07 15:02:13,066 - INFO - Processing dashboard: JAQL_Test (Total Widgets: 1)
+2024-10-07 15:02:13,402 - INFO - Processed 1 widgets for dashboard: JAQL_Test
+2024-10-07 15:02:13,402 - INFO - Processing dashboard: Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1 (Total Widgets: 42)
+2024-10-07 15:02:13,820 - INFO - Processed 42 widgets for dashboard: Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1
+2024-10-07 15:02:13,820 - INFO - Processing dashboard: look_and_feel (Total Widgets: 1)
+2024-10-07 15:02:14,211 - INFO - Processed 1 widgets for dashboard: look_and_feel
+2024-10-07 15:02:14,211 - INFO - Processing dashboard: look_and_feel2 (Total Widgets: 1)
+2024-10-07 15:02:14,575 - INFO - Processed 1 widgets for dashboard: look_and_feel2
+2024-10-07 15:02:14,575 - INFO - Processing dashboard: Main_Dash (Total Widgets: 3)
+2024-10-07 15:02:14,958 - INFO - Processed 3 widgets for dashboard: Main_Dash
+2024-10-07 15:02:14,958 - INFO - Processing dashboard: Mytonomy_Blox (Total Widgets: 4)
+2024-10-07 15:02:15,297 - INFO - Processed 4 widgets for dashboard: Mytonomy_Blox
+2024-10-07 15:02:15,297 - INFO - Processing dashboard: mytonomy_widget (Total Widgets: 2)
+2024-10-07 15:02:15,655 - INFO - Processed 2 widgets for dashboard: mytonomy_widget
+2024-10-07 15:02:15,655 - INFO - Processing dashboard: nasdaq_switch_measure (Total Widgets: 2)
+2024-10-07 15:02:15,998 - INFO - Processed 2 widgets for dashboard: nasdaq_switch_measure
+2024-10-07 15:02:15,998 - INFO - Processing dashboard: Nouria_AI_Demo (Total Widgets: 4)
+2024-10-07 15:02:16,378 - INFO - Processed 4 widgets for dashboard: Nouria_AI_Demo
+2024-10-07 15:02:16,378 - INFO - Processing dashboard: pivot_widget_api (Total Widgets: 2)
+2024-10-07 15:02:16,723 - INFO - Processed 2 widgets for dashboard: pivot_widget_api
+2024-10-07 15:02:16,724 - INFO - Processing dashboard: pivot_widget_script (Total Widgets: 2)
+2024-10-07 15:02:17,078 - INFO - Processed 2 widgets for dashboard: pivot_widget_script
+2024-10-07 15:02:17,079 - INFO - Processing dashboard: pulse_tangoe (Total Widgets: 4)
+2024-10-07 15:02:17,420 - INFO - Processed 4 widgets for dashboard: pulse_tangoe
+2024-10-07 15:02:17,420 - INFO - Processing dashboard: query_path (Total Widgets: 1)
+2024-10-07 15:02:17,774 - INFO - Processed 1 widgets for dashboard: query_path
+2024-10-07 15:02:17,775 - INFO - Processing dashboard: samp_lead_gen_2 (Total Widgets: 5)
+2024-10-07 15:02:18,115 - INFO - Processed 5 widgets for dashboard: samp_lead_gen_2
+2024-10-07 15:02:18,115 - INFO - Processing dashboard: Sample - Ecommerce (Total Widgets: 10)
+2024-10-07 15:02:18,471 - INFO - Processed 10 widgets for dashboard: Sample - Ecommerce
+2024-10-07 15:02:18,471 - INFO - Processing dashboard: Sample - Healthcare (Total Widgets: 7)
+2024-10-07 15:02:18,867 - INFO - Processed 7 widgets for dashboard: Sample - Healthcare
+2024-10-07 15:02:18,867 - INFO - Processing dashboard: Sample - Lead Generation (Total Widgets: 7)
+2024-10-07 15:02:19,355 - INFO - Processed 7 widgets for dashboard: Sample - Lead Generation
+2024-10-07 15:02:19,355 - INFO - Processing dashboard: Sample - Retail (Total Widgets: 8)
+2024-10-07 15:02:19,710 - INFO - Processed 8 widgets for dashboard: Sample - Retail
+2024-10-07 15:02:19,711 - INFO - Processing dashboard: Sample ECommerce (Total Widgets: 1)
+2024-10-07 15:02:20,055 - INFO - Processed 1 widgets for dashboard: Sample ECommerce
+2024-10-07 15:02:20,055 - INFO - Processing dashboard: Sample Healthcare (Total Widgets: 1)
+2024-10-07 15:02:20,400 - INFO - Processed 1 widgets for dashboard: Sample Healthcare
+2024-10-07 15:02:20,400 - INFO - Processing dashboard: Sample Lead Generation (Total Widgets: 1)
+2024-10-07 15:02:20,742 - INFO - Processed 1 widgets for dashboard: Sample Lead Generation
+2024-10-07 15:02:20,742 - INFO - Processing dashboard: Sample Retail (Total Widgets: 1)
+2024-10-07 15:02:21,104 - INFO - Processed 1 widgets for dashboard: Sample Retail
+2024-10-07 15:02:21,104 - INFO - Processing dashboard: Sample Retail (1) (Total Widgets: 1)
+2024-10-07 15:02:21,454 - INFO - Processed 1 widgets for dashboard: Sample Retail (1)
+2024-10-07 15:02:21,454 - INFO - Processing dashboard: SCE Commerce - Detailed Company View v1.4.1 (Total Widgets: 42)
+2024-10-07 15:02:21,916 - INFO - Processed 42 widgets for dashboard: SCE Commerce - Detailed Company View v1.4.1
+2024-10-07 15:02:21,916 - INFO - Processing dashboard: simply_ask (Total Widgets: 3)
+2024-10-07 15:02:22,261 - INFO - Processed 3 widgets for dashboard: simply_ask
+2024-10-07 15:02:22,261 - INFO - Processing dashboard: slowest_performing_assets (Total Widgets: 1)
+2024-10-07 15:02:22,633 - INFO - Processed 1 widgets for dashboard: slowest_performing_assets
+2024-10-07 15:02:22,633 - INFO - Processing dashboard: solution_center_blox (Total Widgets: 1)
+2024-10-07 15:02:22,965 - INFO - Processed 1 widgets for dashboard: solution_center_blox
+2024-10-07 15:02:22,965 - INFO - Processing dashboard: sophos (Total Widgets: 0)
+2024-10-07 15:02:23,290 - INFO - Processed 0 widgets for dashboard: sophos
+2024-10-07 15:02:23,290 - INFO - Processing dashboard: Subaru (Total Widgets: 1)
+2024-10-07 15:02:23,647 - INFO - Processed 1 widgets for dashboard: Subaru
+2024-10-07 15:02:23,647 - INFO - Processing dashboard: supply _wisdom (Total Widgets: 2)
+2024-10-07 15:02:24,000 - INFO - Processed 2 widgets for dashboard: supply _wisdom
+2024-10-07 15:02:24,000 - INFO - Processing dashboard: TE_A_Test (Total Widgets: 1)
+2024-10-07 15:02:24,348 - INFO - Processed 1 widgets for dashboard: TE_A_Test
+2024-10-07 15:02:24,348 - INFO - Processing dashboard: Test FOO-13110 (Total Widgets: 1)
+2024-10-07 15:02:24,714 - INFO - Processed 1 widgets for dashboard: Test FOO-13110
+2024-10-07 15:02:24,715 - INFO - Processing dashboard: test1_2 (Total Widgets: 1)
+2024-10-07 15:02:25,055 - INFO - Processed 1 widgets for dashboard: test1_2
+2024-10-07 15:02:25,057 - INFO - Processing dashboard: Test_ec_to_live (Total Widgets: 1)
+2024-10-07 15:02:25,397 - INFO - Processed 1 widgets for dashboard: Test_ec_to_live
+2024-10-07 15:02:25,398 - INFO - Processing dashboard: test_flow (Total Widgets: 1)
+2024-10-07 15:02:25,741 - INFO - Processed 1 widgets for dashboard: test_flow
+2024-10-07 15:02:25,742 - INFO - Processing dashboard: test_flow (1) (Total Widgets: 1)
+2024-10-07 15:02:26,103 - INFO - Processed 1 widgets for dashboard: test_flow (1)
+2024-10-07 15:02:26,104 - INFO - Processing dashboard: test_plugin (Total Widgets: 1)
+2024-10-07 15:02:26,496 - INFO - Processed 1 widgets for dashboard: test_plugin
+2024-10-07 15:02:26,497 - INFO - Processing dashboard: Time_Series (Total Widgets: 2)
+2024-10-07 15:02:26,912 - INFO - Processed 2 widgets for dashboard: Time_Series
+2024-10-07 15:02:26,912 - INFO - Processing dashboard: total_expert_null (Total Widgets: 1)
+2024-10-07 15:02:27,249 - INFO - Processed 1 widgets for dashboard: total_expert_null
+2024-10-07 15:02:27,249 - INFO - Processing dashboard: trtr (Total Widgets: 2)
+2024-10-07 15:02:27,589 - INFO - Processed 2 widgets for dashboard: trtr
+2024-10-07 15:02:27,589 - INFO - Processing dashboard: unused (Total Widgets: 1)
+2024-10-07 15:02:27,936 - INFO - Processed 1 widgets for dashboard: unused
+2024-10-07 15:02:27,937 - INFO - Processing dashboard: unused (1) (Total Widgets: 1)
+2024-10-07 15:02:28,296 - INFO - Processed 1 widgets for dashboard: unused (1)
+2024-10-07 15:02:28,296 - INFO - Processing dashboard: Usage - Builds - Failures (Total Widgets: 11)
+2024-10-07 15:02:28,639 - INFO - Processed 11 widgets for dashboard: Usage - Builds - Failures
+2024-10-07 15:02:28,640 - INFO - Processing dashboard: Usage - Builds - Overview (Total Widgets: 18)
+2024-10-07 15:02:28,984 - INFO - Processed 18 widgets for dashboard: Usage - Builds - Overview
+2024-10-07 15:02:28,984 - INFO - Processing dashboard: Usage - Dashboards (Total Widgets: 10)
+2024-10-07 15:02:29,348 - INFO - Processed 10 widgets for dashboard: Usage - Dashboards
+2024-10-07 15:02:29,348 - INFO - Processing dashboard: Usage - Domains (Total Widgets: 14)
+2024-10-07 15:02:29,712 - INFO - Processed 14 widgets for dashboard: Usage - Domains
+2024-10-07 15:02:29,713 - INFO - Processing dashboard: Usage - General (Total Widgets: 9)
+2024-10-07 15:02:30,054 - INFO - Processed 9 widgets for dashboard: Usage - General
+2024-10-07 15:02:30,054 - INFO - Processing dashboard: Usage - Groups (Total Widgets: 11)
+2024-10-07 15:02:30,419 - INFO - Processed 11 widgets for dashboard: Usage - Groups
+2024-10-07 15:02:30,419 - INFO - Processing dashboard: Usage - Query (Total Widgets: 0)
+2024-10-07 15:02:30,772 - INFO - Processed 36 widgets for dashboard: Usage - Query
+2024-10-07 15:02:30,772 - WARNING - Widget count mismatch for Usage - Query: Expected 0, Processed 36
+2024-10-07 15:02:30,772 - INFO - Processing dashboard: Usage - Users (Total Widgets: 11)
+2024-10-07 15:02:31,130 - INFO - Processed 11 widgets for dashboard: Usage - Users
+2024-10-07 15:02:31,130 - INFO - Processing dashboard: Used Table and Column (Total Widgets: 3)
+2024-10-07 15:02:31,471 - INFO - Processed 3 widgets for dashboard: Used Table and Column
+2024-10-07 15:02:31,472 - INFO - Processing dashboard: Verge_Demo (Total Widgets: 5)
+2024-10-07 15:02:31,945 - INFO - Processed 5 widgets for dashboard: Verge_Demo
+2024-10-07 15:02:31,945 - INFO - Processing dashboard: Verge_Demo (Live) (Total Widgets: 2)
+2024-10-07 15:02:32,291 - INFO - Processed 2 widgets for dashboard: Verge_Demo (Live)
+2024-10-07 15:02:32,292 - INFO - Processing dashboard: Verge_DS (Total Widgets: 1)
+2024-10-07 15:02:32,650 - INFO - Processed 1 widgets for dashboard: Verge_DS
+2024-10-07 15:02:32,651 - INFO - Processing dashboard: Verizon_Custom_Code (Total Widgets: 1)
+2024-10-07 15:02:33,005 - INFO - Processed 1 widgets for dashboard: Verizon_Custom_Code
+2024-10-07 15:02:33,005 - INFO - Processing dashboard: Wabtech (Total Widgets: 2)
+2024-10-07 15:02:33,343 - INFO - Processed 2 widgets for dashboard: Wabtech
+2024-10-07 15:02:33,343 - INFO - Processing dashboard: wellcheck (Total Widgets: 5)
+2024-10-07 15:02:33,709 - INFO - Processed 5 widgets for dashboard: wellcheck
+2024-10-07 15:02:33,709 - INFO - Processing dashboard: widget (Total Widgets: 1)
+2024-10-07 15:02:34,068 - INFO - Processed 1 widgets for dashboard: widget
+2024-10-07 15:02:34,068 - INFO - Processing dashboard: zywave (Total Widgets: 3)
+2024-10-07 15:02:34,428 - INFO - Processed 3 widgets for dashboard: zywave
+2024-10-07 15:02:34,440 - INFO - Widget type data has been exported to widget_type.csv
+2024-10-07 15:02:34,446 - INFO - Data processing completed. Here's a sample:
+      dashboard_name   widget_type
+0  1 - ESG Dashboard  chart/column
+1  1 - ESG Dashboard    chart/line
+2  1 - ESG Dashboard     chart/bar
+3  1 - ESG Dashboard  chart/column
+4  1 - ESG Dashboard  chart/column

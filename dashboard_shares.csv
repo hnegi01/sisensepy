@@ -1,0 +1,183 @@
+dashboard,type,name
+1 - ESG Dashboard,user,autotest@sisense.com
+1 - ESG Dashboard,user,himanshu.negi@sisense.com
+1 - ESG Dashboard,group,groupa
+_accrd_test,user,autotest@sisense.com
+_drill_beqom,user,autotest@sisense.com
+_drill_CCT_json,user,autotest@sisense.com
+_drill_dash,user,autotest@sisense.com
+_drill_dash,user,himanshu.negi@sisense.com
+_drill_Sample_Ecommerce,user,autotest@sisense.com
+_drill_test_plugin (1),user,autotest@sisense.com
+_try_another,user,himanshu.negi@sisense.com
+_try_test,user,himanshu.negi@sisense.com
+_try_test,user,autotest@sisense.com
+Accounts_Receivable_closed_ar_auto_sklearn,user,himanshu.negi@sisense.com
+Accounts_Receivable_closed_ar_sagemaker,user,himanshu.negi@sisense.com
+airline_sisense_custom,user,autotest@sisense.com
+airline_sisense_custom,user,himanshu.negi@sisense.com
+airline_sisense_custom,user,jeremy.friedel@sisense.com
+airline_sisense_custom (1),user,te1@test.com
+akitabox_metadata,user,autotest@sisense.com
+akitabox_metadata,user,himanshu.negi@sisense.com
+Amex,user,autotest@sisense.com
+APIs,user,autotest@sisense.com
+Auto_ML-Online-Prediction,user,autotest@sisense.com
+Auto_ML-Online-Prediction(blox),user,autotest@sisense.com
+Autobot,user,autotest@sisense.com
+Autobot_original,user,autotest@sisense.com
+Beqom,user,autotest@sisense.com
+Beqom,user,himanshu.negi@sisense.com
+Blox - Measure Switcher v2.1 - Supports Format,user,autotest@sisense.com
+Blox AI,user,autotest@sisense.com
+Blox Examples,user,himanshu.negi@sisense.com
+Blox Examples,user,te1@test.com
+Blox Examples,user,himanshu.negi@sisense.com
+Blox Examples,user,mike.jones@example.com
+Blox Examples,user,autotest@sisense.com
+Blox Examples (1),user,autotest@sisense.com
+Blox Month L12M Quarter Year Filter Buttons,user,autotest@sisense.com
+Blox1,user,autotest@sisense.com
+blox_landing_page,user,autotest@sisense.com
+blox_train_model,user,autotest@sisense.com
+CCT_json,user,himanshu.negi@sisense.com
+CCT_json,user,autotest@sisense.com
+central_square_sdiff,user,autotest@sisense.com
+central_square_sdiff,user,himanshu.negi@sisense.com
+CentralReach,user,autotest@sisense.com
+CentralReach,user,autobot@sisense.com
+centralsquare_search,user,himanshu.negi@sisense.com
+centralsquare_search,user,te1@test.com
+centralsquare_search,user,autotest@sisense.com
+churn_prediction_churn_auto_sklearn,user,himanshu.negi@sisense.com
+churn_prediction_churn_sagemaker,user,himanshu.negi@sisense.com
+churn_prediction_churn_sagemaker,user,autotest@sisense.com
+churn_prediction_churn_sagemaker,user,himanshu.negi@sisense.com
+Community,user,autotest@sisense.com
+CON,user,autotest@sisense.com
+Demo,user,autotest@sisense.com
+Demo- Notebooks,user,autotest@sisense.com
+DS_CHECK,user,autotest@sisense.com
+DS_CHECK,user,himanshu.negi@sisense.com
+Dynamic_EC,user,himanshu.negi@sisense.com
+Dynamic_EC,user,te1@test.com
+Dynamic_EC,user,autotest@sisense.com
+Dynamic_EC,user,viewer@sisense.com
+Dynamic_EC,group,te2
+expand_pivot,user,autotest@sisense.com
+expand_pivot,user,admin@admin.com
+Export to PDF text widget,user,himanshu.negi@sisense.com
+Export to PDF text widget,user,autotest@sisense.com
+generative_ai,user,himanshu.negi@sisense.com
+Governance Dashboard,user,himanshu.negi@sisense.com
+Governance Dashboard,user,te1@test.com
+Governance Dashboard,user,mike.jones@example.com
+Governance Users Info,user,himanshu.negi@sisense.com
+Governance Users Info,user,te1@test.com
+Health Assessment,user,autotest@sisense.com
+himanshu_test,user,autotest@sisense.com
+housing_dataset_housing_auto_sklearn,user,himanshu.negi@sisense.com
+housing_dataset_housing_sagemaker,user,himanshu.negi@sisense.com
+housing_dataset_housing_sagemaker,user,autotest@sisense.com
+Iframe,user,autotest@sisense.com
+image_url,user,autotest@sisense.com
+include_all_dim,user,autotest@sisense.com
+Industrial_Scientific,user,autotest@sisense.com
+Industrial_Scientific,user,himanshu.negi@sisense.com
+INDUSTRY - SBS View,user,autotest@sisense.com
+IntApp,user,autotest@sisense.com
+Intelex,user,autotest@sisense.com
+IPC Body CMM,user,autotest@sisense.com
+IPC Body CMM (1),user,autotest@sisense.com
+IPC Body CMM (2),user,autotest@sisense.com
+iris_dataset_Iris_auto_sklearn,user,himanshu.negi@sisense.com
+JAQL,user,autotest@sisense.com
+JAQL_Test,user,autotest@sisense.com
+Latency Testing MCooper - SCE Commerce - Detailed Company View v1.4.1,user,autotest@sisense.com
+look_and_feel,user,autotest@sisense.com
+look_and_feel2,user,autotest@sisense.com
+Main_Dash,user,autotest@sisense.com
+Mytonomy_Blox,user,autotest@sisense.com
+mytonomy_widget,user,autotest@sisense.com
+nasdaq_switch_measure,user,autotest@sisense.com
+pivot_widget_api,user,autotest@sisense.com
+pivot_widget_script,user,himanshu.negi@sisense.com
+pivot_widget_script,user,autotest@sisense.com
+pulse_tangoe,user,autotest@sisense.com
+pulse_tangoe,user,himanshu.negi@sisense.com
+pulse_tangoe,user,gowtham.senthilkumar@sisense.com
+query_path,user,himanshu.negi@sisense.com
+samp_lead_gen_2,user,himanshu.negi@sisense.com
+samp_lead_gen_2,user,autotest@sisense.com
+Sample - Ecommerce,user,autotest@sisense.com
+Sample - Ecommerce,user,widget@sisense.com
+Sample - Healthcare,user,autotest@sisense.com
+Sample - Lead Generation,user,autotest@sisense.com
+Sample - Retail,user,autotest@sisense.com
+Sample ECommerce,user,himanshu.negi@sisense.com
+Sample Healthcare,user,himanshu.negi@sisense.com
+Sample Lead Generation,user,himanshu.negi@sisense.com
+Sample Retail,user,autotest@sisense.com
+Sample Retail (1),user,autotest@sisense.com
+SCE Commerce - Detailed Company View v1.4.1,user,himanshu.negi@sisense.com
+SCE Commerce - Detailed Company View v1.4.1,user,autotest@sisense.com
+simply_ask,user,autotest@sisense.com
+slowest_performing_assets,user,autotest@sisense.com
+solution_center_blox,user,himanshu.negi@sisense.com
+sophos,user,autotest@sisense.com
+Subaru,user,autotest@sisense.com
+supply _wisdom,user,autotest@sisense.com
+TE_A_Test,user,himanshu.negi@sisense.com
+TE_A_Test,user,te1@test.com
+TE_A_Test,user,autotest@sisense.com
+Test FOO-13110,user,autotest@sisense.com
+test1_2,user,autotest@sisense.com
+Test_ec_to_live,user,autotest@sisense.com
+test_flow,user,autotest@sisense.com
+test_flow,user,himanshu.negi@sisense.com
+test_flow,user,A@test.com
+test_flow (1),user,A@test.com
+test_plugin,user,autotest@sisense.com
+Time_Series,user,autotest@sisense.com
+total_expert_null,user,autotest@sisense.com
+trtr,user,autotest@sisense.com
+unused,user,autotest@sisense.com
+unused (1),user,autotest@sisense.com
+Usage - Builds - Failures,user,himanshu.negi@sisense.com
+Usage - Builds - Failures,group,Admins
+Usage - Builds - Failures,user,autotest@sisense.com
+Usage - Builds - Overview,group,Admins
+Usage - Builds - Overview,user,autotest@sisense.com
+Usage - Dashboards,user,himanshu.negi@sisense.com
+Usage - Dashboards,group,Admins
+Usage - Dashboards,user,autotest@sisense.com
+Usage - Domains,user,himanshu.negi@sisense.com
+Usage - Domains,group,Admins
+Usage - Domains,user,autotest@sisense.com
+Usage - General,user,himanshu.negi@sisense.com
+Usage - General,group,Admins
+Usage - General,user,autotest@sisense.com
+Usage - Groups,user,himanshu.negi@sisense.com
+Usage - Groups,group,Admins
+Usage - Groups,user,autotest@sisense.com
+Usage - Query,group,Admins
+Usage - Query,user,autotest@sisense.com
+Usage - Users,user,himanshu.negi@sisense.com
+Usage - Users,group,Admins
+Usage - Users,user,autotest@sisense.com
+Used Table and Column,user,himanshu.negi@sisense.com
+Used Table and Column,user,te1@test.com
+Used Table and Column,user,autotest@sisense.com
+Used Table and Column,user,source@sisense.com
+Verge_Demo,user,autotest@sisense.com
+Verge_Demo (Live),user,autotest@sisense.com
+Verge_DS,user,autotest@sisense.com
+Verizon_Custom_Code,user,autotest@sisense.com
+Wabtech,user,oleg.fil@sisense.com
+Wabtech,user,viewer@sisense.com
+wellcheck,user,himanshu.negi@sisense.com
+wellcheck,user,autotest@sisense.com
+widget,user,widget@sisense.com
+widget,user,te2@test.com
+widget,user,A@test.com
+zywave,user,autotest@sisense.com

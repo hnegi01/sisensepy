@@ -249,7 +249,6 @@ class Migration:
             return []
 
 
-
     def migrate_all_users(self):
         """
         Migrates all users from the source environment to the target environment using the bulk endpoint.
@@ -337,205 +336,820 @@ class Migration:
             self.logger.warning("No users to migrate.")
             return []
 
-    def migrate_dashboards(self, dashboard_name_list, action=None, republish=False, shares=False):
+    def migrate_dashboards(self, dashboard_ids=None, dashboard_names=None, action=None, republish=False, shares=False):
         """
         Migrates specific dashboards from the source environment to the target environment using the bulk endpoint.
 
         Parameters:
-            dashboard_name_list (list): A list of dashboard names to migrate.
+            dashboard_ids (list, optional): A list of dashboard IDs to migrate. Either `dashboard_ids` or `dashboard_names` must be provided.
+            dashboard_names (list, optional): A list of dashboard names to migrate. Either `dashboard_ids` or `dashboard_names` must be provided.
             action (str, optional): Determines if the existing dashboard should be overwritten.
                                     Options: 'skip', 'overwrite', 'duplicate'.
                                     Default: None (no action passed to API).
             republish (bool, optional): Whether to republish dashboards after migration.
                                         Default: False.
-            shares (bool): Whether to also migrate the dashboard's shares. Default is False.
+            shares (bool, optional): Whether to also migrate the dashboard's shares. Default is False.
 
         Returns:
-            dict: A summary of the migration results with lists of succeeded, skipped, and failed dashboards.
+            dict: A summary of the migration results with lists of succeeded, skipped, and failed dashboards,
+                and a count of successfully migrated and failed shares if `shares=True`.
         """
-        self.logger.info("Starting dashboard migration from source to target.")
+        shares_flag = shares
+
+        if dashboard_ids and dashboard_names:
+            raise ValueError("Please provide either 'dashboard_ids' or 'dashboard_names', not both.")
         
-        # Step 1: Get all dashboards from the source environment
-        self.logger.debug("Fetching dashboards from the source environment using searches endpoint.")
+        self.logger.info("Starting dashboard migration from source to target.")
+
+        # Step 1: Fetch dashboards based on provided parameters (IDs or names)
+        bulk_dashboard_data = []
+        if dashboard_ids:
+            self.logger.info(f"Processing dashboard migration by IDs: {dashboard_ids}")
+            for dashboard_id in dashboard_ids:
+                # Make a request to export the dashboard by ID
+                source_dashboard_response = self.source_client.get(f"/api/dashboards/{dashboard_id}/export?adminAccess=true")
+                if source_dashboard_response.status_code == 200:
+                    self.logger.debug(f"Dashboard with ID: {dashboard_id} retrieved successfully.")
+                    bulk_dashboard_data.append(source_dashboard_response.json())
+                else:
+                    self.logger.error(f"Failed to export dashboard with ID: {dashboard_id}. Status Code: {source_dashboard_response.status_code}")
+
+        elif dashboard_names:
+            self.logger.debug("Fetching dashboards from the source environment using searches endpoint.")
+            limit = 50
+            skip = 0
+            dashboards = []
+            while True:
+                self.logger.debug(f"Fetching dashboards (limit={limit}, skip={skip})")
+                dashboard_response = self.source_client.post('/api/v1/dashboards/searches', data={
+                    "queryParams": {"ownershipType": "allRoot", "search": "", "ownerInfo": True, "asObject": True},
+                    "queryOptions": {"sort": {"title": 1}, "limit": limit, "skip": skip}
+                })
+
+                if dashboard_response.status_code != 200 or len(dashboard_response.json().get("items", [])) == 0:
+                    self.logger.debug("No more dashboards found or failed to retrieve.")
+                    break
+                else:
+                    dashboards.extend(dashboard_response.json()["items"])
+                    skip += limit
+            
+            if not dashboards:
+                self.logger.error("Failed to retrieve dashboards from the source environment.")
+                return []
+
+            self.logger.info(f"Retrieved {len(dashboards)} dashboards from the source environment.")
+
+            # Step 2: Filter the dashboards to migrate
+            self.logger.info("Filtering dashboards to migrate.")
+            for dashboard in dashboards:
+                if dashboard["title"] in dashboard_names:
+                    # Make a request to export the dashboard by name
+                    source_dashboard_response = self.source_client.get(f"/api/dashboards/{dashboard['oid']}/export?adminAccess=true")
+                    if source_dashboard_response.status_code == 200:
+                        self.logger.debug(f"Dashboard: {dashboard['title']} retrieved successfully.")
+                        bulk_dashboard_data.append(source_dashboard_response.json())
+                    else:
+                        self.logger.error(f"Failed to export dashboard: {dashboard['title']} (ID: {dashboard['oid']}). Status Code: {source_dashboard_response.status_code}")
+                else:
+                    self.logger.debug(f"Skipping dashboard: {dashboard['title']}")
+
+        # Step 3: Make the bulk POST request with the dashboard data
+        if bulk_dashboard_data:
+            url = f"/api/v1/dashboards/import/bulk?republish={str(republish).lower()}"
+            if action:
+                url += f"&action={action}"
+
+            self.logger.info(f"Sending bulk migration request for {len(bulk_dashboard_data)} dashboards.")
+            response = self.target_client.post(url, data=bulk_dashboard_data)
+
+            # Step 3.1: Handle the migration results
+            migration_summary = {'succeeded': [], 'skipped': [], 'failed': []}
+
+            if response.status_code == 200:
+                response_data = response.json()
+
+                # Handle succeeded dashboards
+                if 'succeeded' in response_data:
+                    for dash in response_data['succeeded']:
+                        migration_summary['succeeded'].append(dash['title'])
+                        self.logger.info(f"Successfully migrated dashboard: {dash['title']}")
+
+                # Handle skipped dashboards
+                if 'skipped' in response_data:
+                    for dash in response_data['skipped']:
+                        migration_summary['skipped'].append(dash['title'])
+                        self.logger.info(f"Skipped dashboard: {dash['title']}")
+
+                # Handle failed dashboards
+                if 'failed' in response_data:
+                    for error in response_data['failed'].get('CannotOverwriteDashboard', []):
+                        migration_summary['failed'].append(error['title'])
+                        self.logger.warning(f"Failed to migrate dashboard: {error['title']} - {error['error']['message']}")
+            else:
+                self.logger.error(f"Bulk migration failed. Status Code: {response.status_code}")
+                migration_summary['failed'].extend([dash['title'] for dash in bulk_dashboard_data])
+
+        # Step 4: Handle shares if flag is set
+        if shares_flag:
+            self.logger.info("Processing shares for the migrated dashboards.")
+            
+            # Initialize counters for share success and failures
+            share_success_count = 0
+            share_fail_count = 0
+            
+            # Fetch source and target users/groups
+            self.logger.debug("Fetching userIds from source system")
+            source_user_ids = self.source_client.get("/api/v1/users")
+            if source_user_ids.status_code == 200:
+                source_user_ids = {user["email"]: user["_id"] for user in source_user_ids.json()}
+            else:
+                self.logger.error("Failed to retrieve user IDs from the source environment.")
+                source_user_ids = {}
+
+            self.logger.debug("Fetching userIds from target system")
+            target_user_ids = self.target_client.get("/api/v1/users")
+            if target_user_ids.status_code == 200:
+                target_user_ids = {user["email"]: user["_id"] for user in target_user_ids.json()}
+            else:
+                self.logger.error("Failed to retrieve user IDs from the target environment.")
+                target_user_ids = {}
+
+            user_mapping = {source_user_ids[key]: target_user_ids.get(key, None) for key in source_user_ids}
+
+            self.logger.debug("Fetching groups from source system")
+            source_group_ids = self.source_client.get("/api/v1/groups")
+            if source_group_ids.status_code == 200:
+                source_group_ids = {group["name"]: group["_id"] for group in source_group_ids.json() if group["name"] not in ["Everyone", "All users in system"]}
+            else:
+                self.logger.error("Failed to retrieve group IDs from the source environment.")
+                source_group_ids = {}
+
+            self.logger.debug("Fetching groups from target system")
+            target_group_ids = self.target_client.get("/api/v1/groups")
+            if target_group_ids.status_code == 200:
+                target_group_ids = {group["name"]: group["_id"] for group in target_group_ids.json() if group["name"] not in ["Everyone", "All users in system"]}
+            else:
+                self.logger.error("Failed to retrieve group IDs from the target environment.")
+                target_group_ids = {}
+
+            group_mapping = {source_group_ids[key]: target_group_ids.get(key, None) for key in source_group_ids}
+
+            # Process shares for each migrated dashboard
+            for dashboard in bulk_dashboard_data:
+                self.logger.debug(f"Processing shares for dashboard: {dashboard['title']}")
+                dashboard_id = dashboard['oid']
+                dashboard_shares_response = self.source_client.get(f"/api/shares/dashboard/{dashboard_id}?adminAccess=true")
+                if dashboard_shares_response.status_code == 200:
+                    dashboard_shares = dashboard_shares_response.json()
+                    new_shares = []
+                    for share in dashboard_shares["sharesTo"]:
+                        if share["type"] == "user":
+                            new_share_user_id = user_mapping.get(share["shareId"], None)
+                            if new_share_user_id:
+                                new_shares.append({
+                                    "shareId": new_share_user_id,
+                                    "type": "user",
+                                    "rule": share.get("rule", "owner"),
+                                    "subscribe": share["subscribe"]
+                                })
+                        elif share["type"] == "group":
+                            new_share_group_id = group_mapping.get(share["shareId"], None)
+                            if new_share_group_id:
+                                new_shares.append({
+                                    "shareId": new_share_group_id,
+                                    "type": "group",
+                                    "rule": share["rule"],
+                                    "subscribe": share["subscribe"]
+                                })
+                    
+                    # Step 4.1: Post the new shares to the target dashboard
+                    if new_shares:
+                        response = self.target_client.post(f"/api/shares/dashboard/{dashboard_id}", data={"sharesTo": new_shares})
+                        if response.status_code in [200, 201]:
+                            self.logger.info(f"Dashboard '{dashboard['title']}' shares migrated successfully.")
+                            share_success_count += 1
+                        else:
+                            self.logger.error(f"Failed to migrate shares for dashboard: {dashboard['title']}. Status Code: {response.status_code}")
+                            share_fail_count += 1
+                    else:
+                        self.logger.warning(f"No valid shares found for dashboard: {dashboard['title']}. Make sure the users/groups exist in the target environment.")
+                else:
+                    self.logger.warning(f"No shares found for dashboard: {dashboard['title']}")
+
+            # Log the final share migration summary
+            self.logger.info(f"Shares migration completed. Success: {share_success_count}, Failed: {share_fail_count}")
+            migration_summary['share_success_count'] = share_success_count
+            migration_summary['share_fail_count'] = share_fail_count
+
+        else:
+            self.logger.info("Skipping shares migration since shares flag is set to False.")
+        
+        self.logger.info("Finished dashboard migration.")
+        self.logger.info(migration_summary)
+        
+        return migration_summary
+
+
+    def migrate_all_dashboards(self, action=None, republish=False, shares=False):
+        """
+        Migrates all dashboards from the source environment to the target environment using the bulk endpoint.
+
+        Parameters:
+            action (str, optional): Determines if the existing dashboard should be overwritten.
+                                    Options: 'skip', 'overwrite', 'duplicate'.
+                                    Default: None (no action passed to API).
+            republish (bool, optional): Republish dashboards on the target server after copying 
+                                        (only affects overwritten dashboards that were previously shared on the target server).
+                                        Default: False.
+            shares (bool, optional): Whether to also migrate the dashboard's shares. Default is False.
+
+        Returns:
+            dict: A summary of the migration results with lists of succeeded, skipped, and failed dashboards,
+                and a count of successfully migrated and failed shares if `shares=True`.
+        """
+        self.logger.info("Starting full dashboard migration from source to target.")
+
+        # Step 1: Fetch all dashboards from the source environment using searches endpoint
+        self.logger.debug("Fetching all dashboards from the source environment.")
         limit = 50
         skip = 0
         dashboards = []
-        while True: 
+        
+        while True:
             self.logger.debug(f"Fetching dashboards (limit={limit}, skip={skip})")
             dashboard_response = self.source_client.post('/api/v1/dashboards/searches', data={
                 "queryParams": {"ownershipType": "allRoot", "search": "", "ownerInfo": True, "asObject": True},
                 "queryOptions": {"sort": {"title": 1}, "limit": limit, "skip": skip}
             })
 
-            if not dashboard_response or len(dashboard_response.get("items", [])) == 0:
-                self.logger.debug("No more dashboards found.")
+            if dashboard_response.status_code != 200 or len(dashboard_response.json().get("items", [])) == 0:
+                self.logger.debug("No more dashboards found or failed to retrieve.")
                 break
             else:
-                dashboards.extend(dashboard_response["items"])
+                dashboards.extend(dashboard_response.json()["items"])
                 skip += limit
-        
+
         if not dashboards:
             self.logger.error("Failed to retrieve dashboards from the source environment.")
-            print("Failed to retrieve dashboards from the source environment. Please check the logs for more details.")
-            return []
+            return {"succeeded": [], "skipped": [], "failed": []}
         
         self.logger.info(f"Retrieved {len(dashboards)} dashboards from the source environment.")
 
-        # Step 2: Filter the dashboards to migrate
-        self.logger.info("Filtering dashboards to migrate.")
+        # Step 2: Export dashboards for migration
         bulk_dashboard_data = []
         for dashboard in dashboards:
-            if dashboard["title"] in dashboard_name_list:
-                # Make a request to export the dashboard
-                source_dashboard_response = self.source_client.get(f"/api/dashboards/{dashboard['oid']}/export?adminAccess=true")
-                
-                # Check if the response is valid
-                if source_dashboard_response:
-                    self.logger.debug(f"Dashboard: {dashboard['title']} retrieved successfully.")
-                    bulk_dashboard_data.append(source_dashboard_response)
-                else:
-                    self.logger.error(f"Failed to export dashboard: {dashboard['title']} (ID: {dashboard['oid']})")
+            source_dashboard_response = self.source_client.get(f"/api/dashboards/{dashboard['oid']}/export?adminAccess=true")
+            if source_dashboard_response.status_code == 200:
+                self.logger.debug(f"Dashboard: {dashboard['title']} retrieved successfully.")
+                bulk_dashboard_data.append(source_dashboard_response.json())
             else:
-                self.logger.debug(f"Skipping dashboard: {dashboard['title']}")
+                self.logger.error(f"Failed to export dashboard: {dashboard['title']} (ID: {dashboard['oid']}). Status Code: {source_dashboard_response.status_code if source_dashboard_response else 'No response'}")
 
-        self.logger.info(f"Prepared {len(bulk_dashboard_data)} dashboards for migration.")
+        if not bulk_dashboard_data:
+            self.logger.warning("No dashboards were successfully retrieved for migration.")
+            return {"succeeded": [], "skipped": [], "failed": []}
 
-        # Step 3: Share the migrated dashboards with the same users as the source dashboards
+        # Step 3: Make the bulk POST request with the dashboard data
+        url = f"/api/v1/dashboards/import/bulk?republish={str(republish).lower()}"
+        if action:
+            url += f"&action={action}"
+
+        self.logger.info(f"Sending bulk migration request for {len(bulk_dashboard_data)} dashboards.")
+        response = self.target_client.post(url, data=bulk_dashboard_data)
+
+        # Step 3.1: Handle the migration results
+        migration_summary = {'succeeded': [], 'skipped': [], 'failed': []}
+
+        if response.status_code == 200:
+            response_data = response.json()
+
+            # Handle succeeded dashboards
+            if 'succeeded' in response_data:
+                for dash in response_data['succeeded']:
+                    migration_summary['succeeded'].append(dash['title'])
+                    self.logger.info(f"Successfully migrated dashboard: {dash['title']}")
+
+            # Handle skipped dashboards
+            if 'skipped' in response_data:
+                for dash in response_data['skipped']:
+                    migration_summary['skipped'].append(dash['title'])
+                    self.logger.info(f"Skipped dashboard: {dash['title']}")
+
+            # Handle failed dashboards
+            if 'failed' in response_data:
+                for error in response_data['failed'].get('CannotOverwriteDashboard', []):
+                    migration_summary['failed'].append(error['title'])
+                    self.logger.warning(f"Failed to migrate dashboard: {error['title']} - {error['error']['message']}")
+        else:
+            self.logger.error(f"Bulk migration failed. Status Code: {response.status_code if response else 'No response received'}")
+            migration_summary['failed'].extend([dash['title'] for dash in dashboards])
+
+        # Step 4: Handle shares if flag is set
         if shares:
-            self.logger.info("Processing shares from the source dashboards.")
+            self.logger.info("Processing shares for the migrated dashboards.")
+
+            # Initialize counters for share success and failures
+            share_success_count = 0
+            share_fail_count = 0
+
+            # Fetch source and target users/groups
             self.logger.debug("Fetching userIds from source system")
             source_user_ids = self.source_client.get("/api/v1/users")
-            if source_user_ids:
-                source_user_ids = {user["email"]: user["_id"] for user in source_user_ids}
+            if source_user_ids.status_code == 200:
+                source_user_ids = {user["email"]: user["_id"] for user in source_user_ids.json()}
             else:
                 self.logger.error("Failed to retrieve user IDs from the source environment.")
                 source_user_ids = {}
-            #print(source_user_ids)
+
             self.logger.debug("Fetching userIds from target system")
             target_user_ids = self.target_client.get("/api/v1/users")
-            if target_user_ids:
-                target_user_ids = {user["email"]: user["_id"] for user in target_user_ids}
+            if target_user_ids.status_code == 200:
+                target_user_ids = {user["email"]: user["_id"] for user in target_user_ids.json()}
             else:
                 self.logger.error("Failed to retrieve user IDs from the target environment.")
                 target_user_ids = {}
-            #print(target_user_ids)
+
             user_mapping = {source_user_ids[key]: target_user_ids.get(key, None) for key in source_user_ids}
-            #print(user_mapping)
+
             self.logger.debug("Fetching groups from source system")
             source_group_ids = self.source_client.get("/api/v1/groups")
-            if source_group_ids:
-                source_group_ids = {group["name"]: group["_id"] for group in source_group_ids if group["name"] not in ["Everyone", "All users in system"]}
+            if source_group_ids.status_code == 200:
+                source_group_ids = {group["name"]: group["_id"] for group in source_group_ids.json() if group["name"] not in ["Everyone", "All users in system"]}
             else:
                 self.logger.error("Failed to retrieve group IDs from the source environment.")
                 source_group_ids = {}
-            #print(source_group_ids)
+
             self.logger.debug("Fetching groups from target system")
             target_group_ids = self.target_client.get("/api/v1/groups")
-            if target_group_ids:
-                target_group_ids = {group["name"]: group["_id"] for group in target_group_ids if group["name"] not in ["Everyone", "All users in system"]}
+            if target_group_ids.status_code == 200:
+                target_group_ids = {group["name"]: group["_id"] for group in target_group_ids.json() if group["name"] not in ["Everyone", "All users in system"]}
             else:
                 self.logger.error("Failed to retrieve group IDs from the target environment.")
                 target_group_ids = {}
-            #print(target_group_ids)
+
             group_mapping = {source_group_ids[key]: target_group_ids.get(key, None) for key in source_group_ids}
-            #print(group_mapping)
+
+            # Process shares for each migrated dashboard
             for dashboard in bulk_dashboard_data:
-                    self.logger.debug(f"Processing shares for dashboard: {dashboard['title']}")
-                    dashboard_id = dashboard['oid']
-                    shares = self.source_client.get(f"/api/shares/dashboard/{dashboard_id}?adminAccess=true")
-                    if shares:
-                        print(shares)
+                self.logger.debug(f"Processing shares for dashboard: {dashboard['title']}")
+                dashboard_id = dashboard['oid']
+                dashboard_shares_response = self.source_client.get(f"/api/shares/dashboard/{dashboard_id}?adminAccess=true")
+                if dashboard_shares_response.status_code == 200:
+                    dashboard_shares = dashboard_shares_response.json()
+                    new_shares = []
+                    for share in dashboard_shares["sharesTo"]:
+                        if share["type"] == "user":
+                            new_share_user_id = user_mapping.get(share["shareId"], None)
+                            if new_share_user_id:
+                                new_shares.append({
+                                    "shareId": new_share_user_id,
+                                    "type": "user",
+                                    "rule": share.get("rule", "owner"),
+                                    "subscribe": share["subscribe"]
+                                })
+                        elif share["type"] == "group":
+                            new_share_group_id = group_mapping.get(share["shareId"], None)
+                            if new_share_group_id:
+                                new_shares.append({
+                                    "shareId": new_share_group_id,
+                                    "type": "group",
+                                    "rule": share["rule"],
+                                    "subscribe": share["subscribe"]
+                                })
+                    
+                    # Step 4.1: Post the new shares to the target dashboard
+                    if new_shares:
+                        response = self.target_client.post(f"/api/shares/dashboard/{dashboard_id}", data={"sharesTo": new_shares})
+                        if response.status_code in [200, 201]:
+                            self.logger.info(f"Dashboard '{dashboard['title']}' shares migrated successfully.")
+                            share_success_count += 1
+                        else:
+                            self.logger.error(f"Failed to migrate shares for dashboard: {dashboard['title']}. Status Code: {response.status_code}")
+                            share_fail_count += 1
+                    else:
+                        self.logger.warning(f"No valid shares found for dashboard: {dashboard['title']}. Make sure the users/groups exist in the target environment.")
+                else:
+                    self.logger.warning(f"No shares found for dashboard: {dashboard['title']}")
+
+            # Log the final share migration summary
+            self.logger.info(f"Shares migration completed. Success: {share_success_count}, Failed: {share_fail_count}")
+            migration_summary['share_success_count'] = share_success_count
+            migration_summary['share_fail_count'] = share_fail_count
+
+        else:
+            self.logger.info("Skipping shares migration since shares flag is set to False.")
+
+        self.logger.info("Finished full dashboard migration.")
+        self.logger.info(migration_summary)
+
+        return migration_summary
+
+
+    def migrate_datamodels(self, datamodel_ids=None, datamodel_names=None, dependencies=None, shares=False):
+        """
+        Migrates specific data models from the source environment to the target environment.
+
+        Parameters:
+            datamodel_ids (list, optional): A list of data model IDs to migrate. Either `datamodel_ids` or `datamodel_names` must be provided.
+            datamodel_names (list, optional): A list of data model names to migrate. Either `datamodel_ids` or `datamodel_names` must be provided.
+            dependencies (list, optional): A list of dependencies to include in the migration. If not provided or if 'all' is passed, all dependencies are selected by default. 
+                                        Possible values for `dependencies` are:
+                                        - "dataSecurity" (includes both Data Security and Scope Configuration)
+                                        - "formulas" (for Formulas)
+                                        - "hierarchies" (for Drill Hierarchies)
+                                        - "perspectives" (for Perspectives)
+                                        If left blank or set to "all", all dependencies are included by default.
+            shares (bool, optional): Whether to also migrate the data model's shares. Default is False.
+
+        Returns:
+            dict: A summary of the migration results with lists of succeeded, skipped, and failed data models.
+        """
+        # Mapping user-friendly terms to API parameters
+        dependency_mapping = {
+            "dataSecurity": ["dataContext", "scopeConfiguration"],
+            "formulas": ["formulaManagement"],
+            "hierarchies": ["drillHierarchies"],
+            "perspectives": ["perspectives"]
+        }
+
+        # Handle if 'all' is passed or dependencies are not provided (None)
+        if dependencies is None or dependencies == "all":
+            dependencies = ["dataSecurity", "formulas", "hierarchies", "perspectives"]
+
+        # Convert user-friendly dependencies to API-compatible parameters
+        api_dependencies = []
+        for dep in dependencies:
+            if dep in dependency_mapping:
+                api_dependencies.extend(dependency_mapping[dep])
+
+        # Ensure unique values and format for the API call
+        api_dependencies = list(set(api_dependencies))  # Remove duplicates
+
+        # Validate input parameters
+        if datamodel_ids and datamodel_names:
+            raise ValueError("Please provide either 'datamodel_ids' or 'datamodel_names', not both.")
+
+        self.logger.info("Starting data model migration from source to target.")
+
+        # Initialize migration summary
+        migration_summary = {'succeeded': [], 'failed': []}
+        success_count = 0
+        fail_count = 0
+
+        # Fetch data models based on provided parameters (IDs or names)
+        all_datamodel_data = []
+        if datamodel_ids:
+            self.logger.info(f"Processing data model migration by IDs: {datamodel_ids}")
+            for datamodel_id in datamodel_ids:
+                source_datamodel_response = self.source_client.get(
+                    f"/api/v2/datamodel-exports/schema?datamodelId={datamodel_id}&type=schema-latest&dependenciesIdsToInclude={','.join(api_dependencies)}"
+                )
+                if source_datamodel_response.status_code == 200:
+                    self.logger.debug(f"Data model with ID: {datamodel_id} retrieved successfully.")
+                    all_datamodel_data.append(source_datamodel_response.json())
+                else:
+                    self.logger.error(f"Failed to export data model with ID: {datamodel_id}")
+        elif datamodel_names:
+            self.logger.debug("Fetching data models from the source environment using searches endpoint.")
+            datamodel_response = self.source_client.get("/api/v2/datamodels/schema")
+            if datamodel_response.status_code != 200:
+                self.logger.error("Failed to retrieve data models from the source environment.")
+                return migration_summary
+            self.logger.info(f"Retrieved {len(datamodel_response.json())} data models from the source environment.")
+
+            # Filter the data models to migrate
+            for datamodel in datamodel_response.json():
+                if datamodel["title"] in datamodel_names:
+                    source_datamodel_response = self.source_client.get(
+                        f"/api/v2/datamodel-exports/schema?datamodelId={datamodel['oid']}&type=schema-latest&dependenciesIdsToInclude={','.join(api_dependencies)}"
+                    )
+                    if source_datamodel_response.status_code == 200:
+                        self.logger.debug(f"Data model: {datamodel['title']} retrieved successfully.")
+                        all_datamodel_data.append(source_datamodel_response.json())
+                    else:
+                        self.logger.error(f"Failed to export data model: {datamodel['title']} (ID: {datamodel['oid']})")
+
+        # Migrate each data model one by one
+        if all_datamodel_data:
+            self.logger.info(f"Migrating '{len(all_datamodel_data)}' datamodels one by one to the target environment.")
+            successfully_migrated_datamodels = []
+            for data_model in all_datamodel_data:
+                response = self.target_client.post(f"/api/v2/datamodel-imports/schema", data=data_model)
+                if response.status_code == 201:  # Successful response
+                    self.logger.info(f"Successfully migrated data model: {data_model['title']}")
+                    migration_summary['succeeded'].append(data_model['title'])
+                    successfully_migrated_datamodels.append(data_model)
+                    success_count += 1
+                else:
+                    error_message = response.json().get("detail", "Unknown error")
+                    self.logger.error(f"Failed to migrate data model: {data_model['title']}. Error: {error_message}")
+                    migration_summary['failed'].append(data_model['title'])
+                    fail_count += 1
+        else:
+            self.logger.warning("No data models were successfully retrieved for migration.")
+            return migration_summary
+
+        # Final logging for data model migration success and failure counts
+        self.logger.info(f"Data model migration completed. Success: {success_count}, Failed: {fail_count}")
+
+        # Handle shares if the flag is set
+        if shares:
+            self.logger.info("Processing shares for the migrated datamodels.")
+
+            # Fetch source and target users/groups
+            self.logger.debug("Fetching userIds from source system")
+            source_user_ids = self.source_client.get("/api/v1/users")
+            if source_user_ids.status_code == 200:
+                source_user_ids = {user["email"]: user["_id"] for user in source_user_ids.json()}
+            else:
+                self.logger.error("Failed to retrieve user IDs from the source environment.")
+                source_user_ids = {}
+
+            self.logger.debug("Fetching userIds from target system")
+            target_user_ids = self.target_client.get("/api/v1/users")
+            if target_user_ids.status_code == 200:
+                target_user_ids = {user["email"]: user["_id"] for user in target_user_ids.json()}
+            else:
+                self.logger.error("Failed to retrieve user IDs from the target environment.")
+                target_user_ids = {}
+
+            user_mapping = {source_user_ids[key]: target_user_ids.get(key, None) for key in source_user_ids}
+
+            self.logger.debug("Fetching groups from source system")
+            source_group_ids = self.source_client.get("/api/v1/groups")
+            if source_group_ids.status_code == 200:
+                source_group_ids = {group["name"]: group["_id"] for group in source_group_ids.json() if group["name"] not in ["Everyone", "All users in system"]}
+            else:
+                self.logger.error("Failed to retrieve group IDs from the source environment.")
+                source_group_ids = {}
+
+            self.logger.debug("Fetching groups from target system")
+            target_group_ids = self.target_client.get("/api/v1/groups")
+            if target_group_ids.status_code == 200:
+                target_group_ids = {group["name"]: group["_id"] for group in target_group_ids.json() if group["name"] not in ["Everyone", "All users in system"]}
+            else:
+                self.logger.error("Failed to retrieve group IDs from the target environment.")
+                target_group_ids = {}
+
+            group_mapping = {source_group_ids[key]: target_group_ids.get(key, None) for key in source_group_ids}
+
+            # Proceed with share logic for successfully migrated datamodels
+            share_success_count = 0
+            share_fail_count = 0
+            if successfully_migrated_datamodels:
+                for datamodel in successfully_migrated_datamodels:
+                    datamodel_id = datamodel['oid']
+                    if datamodel["type"] == "extract":
+                        datamodel_shares_response = self.source_client.get(f"/api/elasticubes/localhost/{datamodel['title']}/permissions")
+                        datamodel_shares = datamodel_shares_response.json().get("shares", []) if datamodel_shares_response.status_code == 200 else []
+                    elif datamodel["type"] == "live":
+                        datamodel_shares_response = self.source_client.get(f"/api/v1/elasticubes/live/{datamodel_id}/permissions")
+                        datamodel_shares = datamodel_shares_response.json() if datamodel_shares_response.status_code == 200 else []
+                    else:
+                        self.logger.warning(f"Unknown datamodel type for: {datamodel['title']}")
+                        continue
+
+                    # Process the shares if they exist
+                    if datamodel_shares:
                         new_shares = []
-                        for share in shares["sharesTo"]:
+                        for share in datamodel_shares:
                             if share["type"] == "user":
-                                new_share_user_id = user_mapping.get(share["shareId"], None)
-                                if new_share_user_id:  # Only append if a valid mapping exists
-                                    share={
-                                        "rule": share.get("rule", "owner"), ### NEED TO CHECK ##################
-                                        "shareId": new_share_user_id,
-                                        "subscribe": share["subscribe"],
-                                        "type": share["type"]
-                                    }
-                                    new_shares.append(share)
-                                else:
-                                    self.logger.warning(f"User shareId '{share['shareId']}' not found in user_mapping.")
+                                new_share_user_id = user_mapping.get(share["partyId"], None)
+                                if new_share_user_id:
+                                    new_shares.append({
+                                        "partyId": new_share_user_id,
+                                        "type": "user",
+                                        "permission": share.get("permission", "a"),
+                                    })
                             elif share["type"] == "group":
-                                new_share_group_id = group_mapping.get(share["shareId"], None)
-                                if new_share_group_id:  # Only append if a valid mapping exists
-                                    share={
-                                        "rule": share["rule"],
-                                        "shareId": new_share_group_id,
-                                        "subscribe": share["subscribe"],
-                                        "type": share["type"]
-                                    }
-                                    new_shares.append(share)
-                                else:
-                                    self.logger.warning(f"Group shareId '{share['shareId']}' not found in group_mapping.")
+                                new_share_group_id = group_mapping.get(share["partyId"], None)
+                                if new_share_group_id:
+                                    new_shares.append({
+                                        "partyId": new_share_group_id,
+                                        "type": "group",
+                                        "permission": share.get("permission", "a"),
+                                    })
+
+                        # Post the new shares to the target datamodel
+                        if new_shares:
+                            if datamodel["type"] == "extract":
+                                response = self.target_client.put(f"/api/elasticubes/localhost/{datamodel['title']}/permissions", data=new_shares)
+                            elif datamodel["type"] == "live":
+                                response = self.target_client.patch(f"/api/v1/elasticubes/live/{datamodel_id}/permissions", data=new_shares)
+
+                            if response.status_code in [200, 201]:
+                                self.logger.info(f"Datamodel '{datamodel['title']}' shares migrated successfully.")
+                                share_success_count += 1
                             else:
-                                continue  # Skip any other types of shares
-                        print(new_shares)
-                    break
+                                self.logger.error(f"Failed to migrate shares for datamodel: {datamodel['title']}. Error: {response.json() if response else 'No response received.'}")
+                                share_fail_count += 1
+                        else:
+                            self.logger.warning(f"No valid shares found for datamodel: {datamodel['title']}.")
 
-                            
+            # Log the final share migration summary
+            self.logger.info(f"Shares migration completed. Success: {share_success_count}, Failed: {share_fail_count}")
+            migration_summary['share_success_count'] = share_success_count
+            migration_summary['share_fail_count'] = share_fail_count
+        else:
+            self.logger.info("Skipping shares migration since shares flag is set to False.")
+
+        # Final log for the entire migration process
+        self.logger.info("Finished data model migration.")
+        self.logger.info(migration_summary)
+
+        return migration_summary
 
 
-        #             dashboard_id = dashboard['oid']
-        #             shares = self.source_client.get(f"/api/v1/dashboards/{dashboard_id}/shares")
-        #             if shares:
-        #                 for share in shares:
-        #                     share_data = {
-        #                         "entityType": share["entityType"],
-        #                         "entityId": share["entityId"],
-        #                         "permission": share["permission"],
-        #                         "shareType": share["shareType"]
-        #                     }
-        #                     self.target_client.post(f"/api/v1/dashboards/{dashboard_id}/shares", data=share_data)
-        #                     self.logger.info(f"Shared dashboard '{dashboard['title']}' with '{share['entityType']}' ID: '{share['entityId']}'")
-        #             else:
-        #                 self.logger.warning(f"No shares found for dashboard: {dashboard['title']}")
-        #     self.logger.info("Finished processing shares.")
-        # else:
-        #     self.logger.info("Skipping shares migration.")
+    def migrate_all_datamodels(self, dependencies=None, shares=False):
+        """
+        Migrates all data models from the source environment to the target environment.
 
-        # # Step 4: Make the bulk POST request with the dashboard data
-        # if bulk_dashboard_data:
-        #     url = f"/api/v1/dashboards/import/bulk?republish={str(republish).lower()}"
-        #     if action:
-        #         url += f"&action={action}"
+        Parameters:
+            dependencies (list, optional): A list of dependencies to include in the migration. If not provided or if 'all' is passed, all dependencies are selected by default.
+                                        Possible values for `dependencies` are:
+                                        - "dataSecurity" (includes both Data Security and Scope Configuration)
+                                        - "formulas" (for Formulas)
+                                        - "hierarchies" (for Drill Hierarchies)
+                                        - "perspectives" (for Perspectives)
+                                        If left blank or set to "all", all dependencies are included by default.
+            shares (bool, optional): Whether to also migrate the data model's shares. Default is False.
 
-        #     self.logger.info(f"Sending bulk migration request for {len(bulk_dashboard_data)} dashboards.")
-        #     response = self.target_client.post(url, data=bulk_dashboard_data)
-            
-        #     # Step 3.1: Handle the migration results
-        #     migration_summary = {'succeeded': [], 'skipped': [], 'failed': []}
+        Returns:
+            dict: A summary of the migration results with lists of succeeded, skipped, and failed data models.
+        """
+        # Mapping user-friendly terms to API parameters
+        dependency_mapping = {
+            "dataSecurity": ["dataContext", "scopeConfiguration"],
+            "formulas": ["formulaManagement"],
+            "hierarchies": ["drillHierarchies"],
+            "perspectives": ["perspectives"]
+        }
 
-        #     if response:
-        #         # Handle succeeded dashboards
-        #         if 'succeded' in response:
-        #             for dash in response['succeded']:
-        #                 migration_summary['succeeded'].append(dash['title'])
-        #                 self.logger.info(f"Successfully migrated dashboard: {dash['title']}")
+        # Handle if 'all' is passed or dependencies are not provided (None)
+        if dependencies is None or dependencies == "all":
+            dependencies = ["dataSecurity", "formulas", "hierarchies", "perspectives"]
 
-        #         # Handle skipped dashboards
-        #         if 'skipped' in response:
-        #             for dash in response['skipped']:
-        #                 migration_summary['skipped'].append(dash['title'])
-        #                 self.logger.info(f"Skipped dashboard: {dash['title']}")
+        # Convert user-friendly dependencies to API-compatible parameters
+        api_dependencies = []
+        for dep in dependencies:
+            if dep in dependency_mapping:
+                api_dependencies.extend(dependency_mapping[dep])
 
-        #         # Handle failed dashboards
-        #         if 'failed' in response:
-        #             for error in response['failed'].get('CannotOverwriteDashboard', []):
-        #                 migration_summary['failed'].append(error['title'])
-        #                 self.logger.warning(f"Failed to migrate dashboard: {error['title']} - {error['error']['message']}")
-        #                 print(f"Dashboard '{error['title']}' failed to migrate. Error: {error['error']['message']}. "
-        #                     f"To resolve this, provide an appropriate action (skip, overwrite, or duplicate) as the 'action' argument in the 'migrate_dashboards' method.")
+        # Ensure unique values and format for the API call
+        api_dependencies = list(set(api_dependencies))  # Remove duplicates
 
-        #     else:
-        #         self.logger.error("Bulk migration failed. No response received.")
-        #         migration_summary['failed'].extend([dash['title'] for dash in bulk_dashboard_data])
+        self.logger.info("Starting full data model migration from source to target.")
 
-        #     return migration_summary
-        # else:
-        #     self.logger.warning("No dashboards to migrate.")
-        #     #return {'succeeded': [], 'skipped': [], 'failed': []}
+        # Initialize migration summary
+        migration_summary = {'succeeded': [], 'failed': []}
+        success_count = 0
+        fail_count = 0
 
+        # Step 1: Fetch all data models from the source environment
+        self.logger.debug("Fetching all data models from the source environment.")
+        datamodel_response = self.source_client.get("/api/v2/datamodels/schema")
+        if datamodel_response.status_code != 200:
+            self.logger.error("Failed to retrieve data models from the source environment.")
+            return migration_summary
+
+        datamodels = datamodel_response.json()
+        self.logger.info(f"Retrieved {len(datamodels)} data models from the source environment.")
+
+        # Step 2: Export data models for migration
+        all_datamodel_data = []
+        for datamodel in datamodels:
+            source_datamodel_response = self.source_client.get(
+                f"/api/v2/datamodel-exports/schema?datamodelId={datamodel['oid']}&type=schema-latest&dependenciesIdsToInclude={','.join(api_dependencies)}"
+            )
+            if source_datamodel_response.status_code == 200:
+                self.logger.debug(f"Data model: {datamodel['title']} retrieved successfully.")
+                all_datamodel_data.append(source_datamodel_response.json())
+            else:
+                self.logger.error(f"Failed to export data model: {datamodel['title']} (ID: {datamodel['oid']})")
+
+        # Step 3: Migrate each data model one by one
+        if all_datamodel_data:
+            self.logger.info(f"Migrating '{len(all_datamodel_data)}' datamodels one by one to the target environment.")
+            successfully_migrated_datamodels = []
+            for data_model in all_datamodel_data:
+                response = self.target_client.post(f"/api/v2/datamodel-imports/schema", data=data_model)
+                if response.status_code == 201:  # Successful response
+                    self.logger.info(f"Successfully migrated data model: {data_model['title']}")
+                    migration_summary['succeeded'].append(data_model['title'])
+                    successfully_migrated_datamodels.append(data_model)
+                    success_count += 1
+                else:
+                    error_message = response.json().get("detail", "Unknown error")
+                    self.logger.error(f"Failed to migrate data model: {data_model['title']}. Error: {error_message}")
+                    migration_summary['failed'].append(data_model['title'])
+                    fail_count += 1
+        else:
+            self.logger.warning("No data models were successfully retrieved for migration.")
+            return migration_summary
+
+        # Step 4: Handle shares if the flag is set
+        if shares:
+            self.logger.info("Processing shares for the migrated datamodels.")
+
+            # Fetch source and target users/groups
+            self.logger.debug("Fetching userIds from source system")
+            source_user_ids = self.source_client.get("/api/v1/users")
+            if source_user_ids.status_code == 200:
+                source_user_ids = {user["email"]: user["_id"] for user in source_user_ids.json()}
+            else:
+                self.logger.error("Failed to retrieve user IDs from the source environment.")
+                source_user_ids = {}
+
+            self.logger.debug("Fetching userIds from target system")
+            target_user_ids = self.target_client.get("/api/v1/users")
+            if target_user_ids.status_code == 200:
+                target_user_ids = {user["email"]: user["_id"] for user in target_user_ids.json()}
+            else:
+                self.logger.error("Failed to retrieve user IDs from the target environment.")
+                target_user_ids = {}
+
+            user_mapping = {source_user_ids[key]: target_user_ids.get(key, None) for key in source_user_ids}
+
+            self.logger.debug("Fetching groups from source system")
+            source_group_ids = self.source_client.get("/api/v1/groups")
+            if source_group_ids.status_code == 200:
+                source_group_ids = {group["name"]: group["_id"] for group in source_group_ids.json() if group["name"] not in ["Everyone", "All users in system"]}
+            else:
+                self.logger.error("Failed to retrieve group IDs from the source environment.")
+                source_group_ids = {}
+
+            self.logger.debug("Fetching groups from target system")
+            target_group_ids = self.target_client.get("/api/v1/groups")
+            if target_group_ids.status_code == 200:
+                target_group_ids = {group["name"]: group["_id"] for group in target_group_ids.json() if group["name"] not in ["Everyone", "All users in system"]}
+            else:
+                self.logger.error("Failed to retrieve group IDs from the target environment.")
+                target_group_ids = {}
+
+            group_mapping = {source_group_ids[key]: target_group_ids.get(key, None) for key in source_group_ids}
+
+            # Proceed with share logic for successfully migrated datamodels
+            share_success_count = 0
+            share_fail_count = 0
+            if successfully_migrated_datamodels:
+                for datamodel in successfully_migrated_datamodels:
+                    datamodel_id = datamodel['oid']
+                    if datamodel["type"] == "extract":
+                        datamodel_shares_response = self.source_client.get(f"/api/elasticubes/localhost/{datamodel['title']}/permissions")
+                        datamodel_shares = datamodel_shares_response.json().get("shares", []) if datamodel_shares_response.status_code == 200 else []
+                    elif datamodel["type"] == "live":
+                        datamodel_shares_response = self.source_client.get(f"/api/v1/elasticubes/live/{datamodel_id}/permissions")
+                        datamodel_shares = datamodel_shares_response.json() if datamodel_shares_response.status_code == 200 else []
+                    else:
+                        self.logger.warning(f"Unknown datamodel type for: {datamodel['title']}")
+                        continue
+
+                    # Process the shares if they exist
+                    if datamodel_shares:
+                        new_shares = []
+                        for share in datamodel_shares:
+                            if share["type"] == "user":
+                                new_share_user_id = user_mapping.get(share["partyId"], None)
+                                if new_share_user_id:
+                                    new_shares.append({
+                                        "partyId": new_share_user_id,
+                                        "type": "user",
+                                        "permission": share.get("permission", "a"),
+                                    })
+                            elif share["type"] == "group":
+                                new_share_group_id = group_mapping.get(share["partyId"], None)
+                                if new_share_group_id:
+                                    new_shares.append({
+                                        "partyId": new_share_group_id,
+                                        "type": "group",
+                                        "permission": share.get("permission", "a"),
+                                    })
+
+                        # Post the new shares to the target datamodel
+                        if new_shares:
+                            if datamodel["type"] == "extract":
+                                response = self.target_client.put(f"/api/elasticubes/localhost/{datamodel['title']}/permissions", data=new_shares)
+                            elif datamodel["type"] == "live":
+                                response = self.target_client.patch(f"/api/v1/elasticubes/live/{datamodel_id}/permissions", data=new_shares)
+
+                            if response.status_code in [200, 201]:
+                                self.logger.info(f"Datamodel '{datamodel['title']}' shares migrated successfully.")
+                                share_success_count += 1
+                            else:
+                                self.logger.error(f"Failed to migrate shares for datamodel: {datamodel['title']}. Error: {response.json() if response else 'No response received.'}")
+                                share_fail_count += 1
+                        else:
+                            self.logger.warning(f"No valid shares found for datamodel: {datamodel['title']}.")
+
+            # Log the final share migration summary
+            self.logger.info(f"Shares migration completed. Success: {share_success_count}, Failed: {share_fail_count}")
+            migration_summary['share_success_count'] = share_success_count
+            migration_summary['share_fail_count'] = share_fail_count
+        else:
+            self.logger.info("Skipping shares migration since shares flag is set to False.")
+
+        # Final log for the entire migration process
+        self.logger.info("Finished full data model migration.")
+        self.logger.info(migration_summary)
+
+        return migration_summary

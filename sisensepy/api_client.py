@@ -33,7 +33,7 @@ class APIClient:
             self.base_url = f"http://{self.domain}:30845"  # Use non-SSL and specify port 30845
         
         # Extract the API token for authorization
-        self.token = self.config['source_token']
+        self.token = self.config['token']
         
         # Set up HTTP headers, including the Authorization Bearer token
         self.headers = {'Authorization': f'Bearer {self.token}', 'Content-Type': 'application/json'}
@@ -115,6 +115,19 @@ class APIClient:
             dict: JSON response from the server or None if the request fails.
         """
         return self._make_request('POST', endpoint, data=data)
+    
+    def put(self, endpoint, data=None):
+        """
+        Performs a PUT request to the specified API endpoint.
+        
+        Parameters:
+            endpoint (str): API endpoint (relative to the base URL).
+            data (dict): Optional JSON data payload for the PUT request.
+        
+        Returns:
+            dict: JSON response from the server or None if the request fails.
+        """
+        return self._make_request('PUT', endpoint, data=data)
 
     def patch(self, endpoint, data=None):
         """
@@ -141,18 +154,19 @@ class APIClient:
         """
         return self._make_request('DELETE', endpoint)
 
+
     def _make_request(self, method, endpoint, params=None, data=None):
         """
         Makes an HTTP request to the API based on the specified method.
         
         Parameters:
-            method (str): The HTTP method ('GET', 'POST', 'PATCH', 'DELETE').
+            method (str): The HTTP method ('GET', 'POST', 'PUT', 'PATCH', 'DELETE').
             endpoint (str): The API endpoint (relative to the base URL).
             params (dict): Optional query parameters (for GET requests).
-            data (dict): Optional JSON data payload (for POST, PATCH requests).
+            data (dict): Optional JSON data payload (for POST, PUT, PATCH requests).
         
         Returns:
-            dict: JSON response from the server, or None if the request fails.
+            Response: The full response object, or None if the request fails.
         """
         # Construct the full URL for the API request
         url = f"{self.base_url}{endpoint}"
@@ -166,6 +180,8 @@ class APIClient:
                 response = requests.get(url, headers=self.headers, params=params, verify=False)
             elif method == 'POST':
                 response = requests.post(url, headers=self.headers, json=data, verify=False)
+            elif method == 'PUT':
+                response = requests.put(url, headers=self.headers, json=data, verify=False)
             elif method == 'PATCH':
                 response = requests.patch(url, headers=self.headers, json=data, verify=False)
             elif method == 'DELETE':
@@ -190,14 +206,8 @@ class APIClient:
             else:
                 self.logger.warning(f"{method} request to {url} returned unexpected status code {response.status_code}")
             
-            # Return the JSON response if successful, otherwise return None
-            if response.ok:
-                return response.json()  # Return JSON response if status code is successful
-            else:
-                try:
-                    return response.json()  # Return the error response as JSON for further handling
-                except ValueError:
-                    return {"error": response.text}  # Return raw error text if not JSON
+            # Always return the full response object
+            return response
 
         except requests.exceptions.RequestException as e:
             # Log and print the error for end-users
@@ -205,6 +215,8 @@ class APIClient:
             self.logger.error(error_message)
             print(f"Request failed: {error_message}")
             return None
+
+
 
 
 

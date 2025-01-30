@@ -1,0 +1,14 @@
+# Ignore environment files
+.env
+sisensepy_venv/
+
+# Ignore system files
+__pycache__/
+.DS_Store
+sisensepy.egg-info/
+
+# Ignore CSV files
+*.csv
+
+# Ignore log files
+*.log

@@ -1,3 +1,10 @@
+"""
+The api_client.py module is a lightweight API client for making HTTP requests to Sisense APIs. 
+It handles authentication, logging, and API interactions (GET, POST, PUT, PATCH, DELETE). 
+It also includes helper functions for managing configs, logging, and request handling. 
+Additional utilities like to_dataframe and export_to_csv make it easy to work with API response data.
+"""
+
 import requests
 import yaml
 import urllib3
@@ -5,6 +12,7 @@ import logging
 import pandas as pd
 from pandas import json_normalize
 from collections import defaultdict
+import os
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -38,11 +46,16 @@ class APIClient:
         # Set up HTTP headers, including the Authorization Bearer token
         self.headers = {'Authorization': f'Bearer {self.token}', 'Content-Type': 'application/json'}
         
+        log_dir = "logs"
+        if not os.path.exists(log_dir):  
+            os.makedirs(log_dir)
+
         # Set log level to DEBUG if debug is True, otherwise INFO
         log_level = logging.DEBUG if debug else logging.INFO
+        log_file_path = os.path.join(log_dir, "sisensepy.log")
         
         # Initialize the logger
-        self.logger = self._get_logger("APIClient", "sisensepy.log", log_level)
+        self.logger = self._get_logger("APIClient", log_file_path, log_level)
 
     def _load_config(self, config_file):
         """
@@ -76,7 +89,7 @@ class APIClient:
         # Check if the logger already has handlers to avoid duplicates
         if not logger.handlers:
             # Create a file handler for the logger
-            handler = logging.FileHandler(log_filename)
+            handler = logging.FileHandler(log_filename, mode='a')
             
             # Define the format for log messages
             formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
@@ -192,9 +205,9 @@ class APIClient:
             
             # Handle known response codes
             if response.status_code == 200:
-                self.logger.info(f"{method} request to {url} succeeded with status code 200")
+                self.logger.debug(f"{method} request to {url} succeeded with status code 200")
             elif response.status_code == 201:
-                self.logger.info(f"POST request to {url} succeeded with status code 201 (Created)")
+                self.logger.debug(f"POST request to {url} succeeded with status code 201 (Created)")
             elif response.status_code in [400, 404, 500]:
                 # Log the error response text if available
                 try:
@@ -215,11 +228,6 @@ class APIClient:
             self.logger.error(error_message)
             print(f"Request failed: {error_message}")
             return None
-
-
-
-
-
         
     def to_dataframe(self, data):
         """

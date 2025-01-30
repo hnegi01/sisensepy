@@ -1,30 +1,38 @@
 # This script serves as a guide for how to interact with the AccessManagement class.
 # You can uncomment and run one example at a time to see the results.
 
-# Importing the necessary classes from the sisensepy package
-import csv
-from sisensepy.access_management import AccessManagement
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+
+# Importing the necessary classes from the sisensepy package
+from sisensepy.access_management import AccessManagement
+from sisensepy.api_client import APIClient
+
+# Create an instance of APIClient
+api_client = APIClient()
 # Initializes AccessManagement with the default config file
 access_mgmt = AccessManagement(debug=True)
 
 
-# # --- Example 1: Get User Information by Email ---
-# user_email = 'himanshu.negi@sisense.com'
-# response = access_mgmt.get_user(user_email)
-# # Option: Convert the response to a DataFrame and print or export it
-# df = access_mgmt.api_client.to_dataframe(response)
-# print(df)
+# --- Example 1: Get User Information by Email ---
+user_email = 'himanshu.negi@sisense.com'
+response = access_mgmt.get_user(user_email)
+print(response)
+# Option: Convert the response to a DataFrame and print or export it
+df = api_client.to_dataframe(response)
+print(df)
+# Option: Export the raw response to a CSV file
+api_client.export_to_csv(response, file_name="user_info.csv")
 
 
 # # --- Example 2: Get All Users ---
-# print("Example 2: Get All Users")
 # response = access_mgmt.get_users_all()
-
 # # Option: Convert the response to a DataFrame and print or export it
-# df = access_mgmt.api_client.to_dataframe(response)
+# df = api_client.to_dataframe(response)
 # print(df)
-# access_mgmt.api_client.export_to_csv(response, file_name="all_users.csv")
+# api_client.export_to_csv(response, file_name="all_users.csv")
 
 
 # # --- Example 3: Create a New User using role and group name instead of Ids ---
@@ -126,7 +134,7 @@ access_mgmt = AccessManagement(debug=True)
 # else:
 #     print(f"No users found in the group '{group_name}'.")
 
-# df = access_mgmt.api_client.to_dataframe(response)
+# df = api_client.to_dataframe(response)
 # print(df)
 
 # # --- Example 7: Get All Groups with Users ---
@@ -142,7 +150,7 @@ access_mgmt = AccessManagement(debug=True)
 # else:
 #     print("No groups found with users.")
 
-# df = access_mgmt.api_client.to_dataframe(response)
+# df = api_client.to_dataframe(response)
 # print(df)
 
 
@@ -176,14 +184,14 @@ access_mgmt = AccessManagement(debug=True)
 
 # datamodel_name = "Sample Lead Generation"
 # all_columns = access_mgmt.get_datamodel_columns(datamodel_name)
-# df = access_mgmt.api_client.to_dataframe(all_columns)
+# df = api_client.to_dataframe(all_columns)
 # print(df)
 
 # # --- Example 10: Get columns from a Dashboard
 
 # dashboard_id = "samp_lead_gen_2"
 # dashboard_columns = access_mgmt.get_dashboard_columns(dashboard_id)
-# df = access_mgmt.api_client.to_dataframe(dashboard_columns)
+# df = api_client.to_dataframe(dashboard_columns)
 # print(df)
 
 # # --- Example 11: Get Unused Columns in a DataModel
@@ -191,7 +199,7 @@ access_mgmt = AccessManagement(debug=True)
 # unused_columns = access_mgmt.get_unused_columns(datamodel_name='Sample Lead Generation')
 # # Output the result
 # if unused_columns:
-#     df = access_mgmt.api_client.to_dataframe(unused_columns)
+#     df = api_client.to_dataframe(unused_columns)
 #     print(df)
 
 
@@ -199,8 +207,25 @@ access_mgmt = AccessManagement(debug=True)
 # dashboard_shares = access_mgmt.get_all_dashboard_shares()
 
 # # Printing or handling the result
-# df = access_mgmt.api_client.to_dataframe(dashboard_shares)
+# df = api_client.to_dataframe(dashboard_shares)
 # print(df)
+
+# # --- Example: Create a Schedule Build for a DataModel in UTC
+
+# # Specify the schedule details
+# days = ["MON", "TUE", "FRI", "SAT", "SUN"]  # Days of the week
+# hour = 21  # 9 PM in UTC
+# minute = 0  # At the start of the hour
+# datamodel_name = 'snowflake_test'  # Name of the DataModel
+
+# # Create the schedule build
+# response = access_mgmt.create_schedule_build(days=days, hour=hour, minute=minute, datamodel_name=datamodel_name)
+
+# # Output the result
+# if "error" not in response:
+#     print("Schedule created successfully:", response)
+# else:
+#     print("Failed to create schedule:", response["error"])
 
 
 

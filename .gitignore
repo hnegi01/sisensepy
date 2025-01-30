@@ -11,4 +11,7 @@ sisensepy.egg-info/
 *.csv
 
 # Ignore log files
-*.log
+logs/*.log
+
+# Ignore YAML files
+*.yaml
